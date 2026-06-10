@@ -22,11 +22,12 @@ code{font-family:var(--mono);font-size:.92em}
 img{max-width:100%;display:block}
 ::selection{background:var(--accent);color:var(--accent-ink)}
 
-/* ============ fundo animado ============ */
-#fx{ position:fixed; inset:0; z-index:-2; pointer-events:none; }
-/* vinheta sutil no topo p/ profundidade */
-body::before{ content:""; position:fixed; inset:0; z-index:-3; pointer-events:none;
-  background:radial-gradient(130% 80% at 50% -10%,rgba(255,255,255,.03),transparent 55%); }
+/* ============ fundo do hero: shader GrainGradient (paper-design, igual kodeck) ============ */
+.hero-bg{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.hero-bg canvas{ display:block; }
+/* overlay p/ legibilidade: escurece o topo (onde fica o texto) e suaviza a base */
+.hero-fade{ position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(180deg, var(--bg) 0%, rgba(11,12,14,.5) 24%, transparent 54%, transparent 80%, rgba(11,12,14,.3) 100%); }
 
 /* ============ nav ============ */
 .nav{
@@ -58,8 +59,8 @@ body::before{ content:""; position:fixed; inset:0; z-index:-3; pointer-events:no
 .btn-ghost:hover{transform:translateY(-2px); border-color:var(--accent); color:#fff}
 
 /* ============ hero ============ */
-.hero{padding:160px clamp(18px,4vw,42px) 40px; }
-.hero-inner{max-width:var(--max); margin:0 auto; text-align:center; display:flex; flex-direction:column; align-items:center}
+.hero{padding:160px clamp(18px,4vw,42px) 40px; position:relative; overflow:hidden;}
+.hero-inner{max-width:var(--max); margin:0 auto; text-align:center; display:flex; flex-direction:column; align-items:center; position:relative; z-index:2;}
 .pill{
   display:inline-flex; align-items:center; gap:10px; font-family:var(--mono); font-size:.82rem;
   background:var(--surface); border:1px solid var(--border); padding:7px 8px 7px 14px; border-radius:999px; color:var(--muted);

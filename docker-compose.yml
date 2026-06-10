@@ -1,0 +1,30 @@
+# devsplit-front — landing estática (nginx). Pronto para o Dokploy.
+#
+# COMO SUBIR NO DOKPLOY
+#   1. Crie um projeto → serviço do tipo "Compose".
+#   2. Aponte para este repositório (provider Git) ou cole este compose.
+#   3. Deploy. Depois, em "Domains", adicione seu domínio apontando para o
+#      serviço `web`, porta 80 — o Dokploy cria as rotas no Traefik sozinho
+#      (e injeta a rede `dokploy-network`). Não precisa publicar porta no host.
+#
+# TESTE LOCAL
+#   docker compose up --build        # depois descomente o bloco `ports` abaixo
+#   → http://localhost:8080
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: devsplit-front:latest
+    restart: unless-stopped
+    expose:
+      - "80"
+    # Descomente para testar localmente (no Dokploy, prefira o "Domains" da UI):
+    # ports:
+    #   - "8080:80"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
