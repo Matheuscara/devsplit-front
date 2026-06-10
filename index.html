@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>devsplit — split de tráfego de dev, sem Docker</title>
+  <meta name="description" content="Proxy de desenvolvimento que divide o tráfego do seu gateway de stage: os caminhos que você escolher rodam no seu localhost, o resto faz passthrough pro ambiente real. Sem Docker, sem mudar o front." />
+  <meta property="og:title" content="devsplit — split de tráfego de dev" />
+  <meta property="og:description" content="Rode só o serviço que você está mexendo. O resto, no stage." />
+  <meta property="og:image" content="assets/banner.png" />
+  <meta name="theme-color" content="#0b0c0e" />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- fundo animado -->
+  <canvas id="fx" aria-hidden="true"></canvas>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="devsplit — início">
+      <img src="assets/logo.svg" alt="" width="30" height="30" />
+      <span>devsplit</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#problema">Problema</a>
+      <a href="#como">Como funciona</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#interface">Interface</a>
+      <a href="#comecar">Começar</a>
+    </nav>
+    <a class="btn btn-ghost btn-sm" href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+      GitHub
+    </a>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="pill" data-reveal>
+          <span class="pill-dollar">$</span> <code>cargo run</code>
+          <span class="pill-tag">Linux pronto · macOS/Windows via CI</span>
+        </div>
+        <h1 class="hero-title" data-reveal>
+          Rode <span class="accent">só o serviço</span><br />que você está mexendo.
+        </h1>
+        <p class="hero-sub" data-reveal>
+          O <strong>devsplit</strong> intercepta o gateway do seu <strong>stage</strong> e manda os
+          caminhos que você escolher pro seu <code>localhost</code>. O resto faz
+          <strong>passthrough</strong> pro ambiente real — com o certificado validado. <br />
+          <span class="muted">Sem Docker. Sem subir 10 microsserviços. Sem mudar o front.</span>
+        </p>
+        <div class="hero-cta" data-reveal>
+          <a class="btn btn-primary" href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+            Ver no GitHub
+          </a>
+          <a class="btn btn-ghost" href="#comecar">Como começar →</a>
+        </div>
+
+        <!-- janela do produto -->
+        <div class="hero-shot" data-reveal>
+          <div class="window">
+            <div class="window-bar">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="window-title">devsplit</span>
+            </div>
+            <img src="assets/shot-rotas.png" alt="Interface do devsplit: tela de rotas com split local e passthrough" loading="lazy" />
+          </div>
+          <div class="shot-glow" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEMA -->
+    <section class="section" id="problema">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">O problema</span>
+        <h2>"Pra mexer em 1 task, eu subo a stack inteira."</h2>
+        <p>RabbitMQ, observabilidade e uma dúzia de microsserviços NestJS conversando entre si — só pra rodar um pedaço. PC fraco não aguenta, e o setup local vira um inferno.</p>
+      </div>
+      <div class="compare" data-reveal>
+        <div class="compare-card bad">
+          <div class="compare-tag">Sem devsplit</div>
+          <ul>
+            <li>Subir <b>tudo</b> localmente (RAM no talo)</li>
+            <li>Docker compose gigante + filas + bancos</li>
+            <li>Editar <code>.env</code> pra apontar serviços</li>
+            <li>"No meu PC trava" 🫠</li>
+          </ul>
+        </div>
+        <div class="compare-arrow" aria-hidden="true">→</div>
+        <div class="compare-card good">
+          <div class="compare-tag">Com devsplit</div>
+          <ul>
+            <li>Roda <b>só</b> o serviço que você toca</li>
+            <li>O resto continua sendo o <b>stage</b> real</li>
+            <li>Front não muda — aponta pra URL de stage</li>
+            <li>Liga/desliga rota num clique</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section class="section" id="como">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Como funciona</span>
+        <h2>Um proxy local que <span class="accent">divide o caminho</span>.</h2>
+        <p>O domínio do stage resolve pro seu PC. O devsplit termina o TLS com um cert confiável e decide, por prefixo, o que vai pro <b>local</b> e o que segue pro <b>stage real</b>.</p>
+      </div>
+
+      <div class="flow" data-reveal>
+        <svg class="flow-svg" viewBox="0 0 920 320" role="img" aria-label="Diagrama: o front fala com o devsplit, que divide entre serviço local e passthrough para o stage">
+          <defs>
+            <linearGradient id="wire" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#34d399" stop-opacity=".25"/>
+              <stop offset="1" stop-color="#34d399" stop-opacity=".9"/>
+            </linearGradient>
+          </defs>
+          <!-- nós -->
+          <g class="flow-node" data-node="front">
+            <rect x="20" y="128" width="180" height="64" rx="14"/>
+            <text x="110" y="156" class="t-title">front</text>
+            <text x="110" y="176" class="t-sub">https://api.stage…</text>
+          </g>
+          <g class="flow-node accent-node" data-node="proxy">
+            <rect x="372" y="118" width="176" height="84" rx="16"/>
+            <text x="460" y="150" class="t-title">devsplit</text>
+            <text x="460" y="172" class="t-sub">:443 · TLS local</text>
+          </g>
+          <g class="flow-node local" data-node="local">
+            <rect x="720" y="56" width="180" height="64" rx="14"/>
+            <text x="810" y="84" class="t-title">localhost:3000</text>
+            <text x="810" y="104" class="t-sub">LOCAL</text>
+          </g>
+          <g class="flow-node" data-node="stage">
+            <rect x="720" y="200" width="180" height="64" rx="14"/>
+            <text x="810" y="228" class="t-title">stage real</text>
+            <text x="810" y="248" class="t-sub">PASSTHROUGH</text>
+          </g>
+          <!-- fios -->
+          <path class="wire w1" d="M200 160 H372" />
+          <path class="wire w2" d="M548 150 C 640 150, 640 88, 720 88" />
+          <path class="wire w3" d="M548 172 C 640 172, 640 232, 720 232" />
+          <circle class="packet" r="5" />
+        </svg>
+        <div class="flow-legend">
+          <span><i class="leg local"></i> <code>/transporte</code>, <code>/auth</code> → seu localhost</span>
+          <span><i class="leg pass"></i> <code>/*</code> → stage real (cert validado por SNI)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECURSOS -->
+    <section class="section" id="recursos">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Recursos</span>
+        <h2>Tudo que um proxy de dev sério precisa.</h2>
+      </div>
+      <div class="grid">
+        <article class="card" data-reveal>
+          <div class="card-ico">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M6 8.5v3a4 4 0 0 0 4 4h4M18 8.5V12"/></svg>
+          </div>
+          <h3>Split por path-prefix</h3>
+          <p>Escolha os prefixos que rodam local (<code>/transporte</code>, <code>/auth</code>). O mais específico vence; o resto faz passthrough.</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.8-7 9-4-1.2-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>TLS local confiável</h3>
+          <p>O <code>mkcert</code> instala uma CA que o navegador confia. HTTPS de verdade no <code>localhost</code> — sem aviso de cert.</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v2"/></svg></div>
+          <h3>Passthrough seguro</h3>
+          <p>Conecta no IP real do stage e <b>valida</b> o cert remoto por SNI. Nunca desabilita a verificação.</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5l2 2M20 12a8 8 0 0 1-14 5l-2-2"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></div>
+          <h3>Anti-loop por DNS direto</h3>
+          <p>Resolve o IP real ignorando o <code>/etc/hosts</code> — então o proxy nunca conecta em si mesmo.</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3 7 4-14 3 7h4"/></svg></div>
+          <h3>WebSocket transparente</h3>
+          <p>Upgrade e túnel byte-a-byte após o <code>101</code>. socket.io funciona sem nenhuma config extra.</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+          <h3>Inspector ao vivo</h3>
+          <p>Cada request com decisão, status e <b>latência p50/p95 por rota</b>. Copy-as-curl e export HAR.</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
+          <h3>Hot-reload de rotas</h3>
+          <p>Liga/desliga rota a quente, sem derrubar conexões em voo — nem as de WebSocket.</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
+          <h3>App nativo cross-platform</h3>
+          <p>Tauri v2 + Rust: Linux, macOS e Windows num binário leve (~15&nbsp;MB). Sem Docker.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- INTERFACE -->
+    <section class="section" id="interface">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">A interface</span>
+        <h2>Bonita, densa e <span class="accent">ao vivo</span>.</h2>
+        <p>Estilo dev-tool: liga/desliga numa tela, vê o tráfego passando em tempo real e confere a saúde do setup sem sair do app.</p>
+      </div>
+      <div class="shots">
+        <figure class="shot-card big" data-reveal>
+          <img src="assets/shot-rotas.png" alt="Tela de Rotas: domínio interceptado, painel de saúde e tabela local × passthrough" loading="lazy" />
+          <figcaption><b>Rotas</b> — liga/desliga, perfil ativo, painel de saúde e a tabela de rotas.</figcaption>
+        </figure>
+        <figure class="shot-card" data-reveal>
+          <img src="assets/shot-trafego.png" alt="Inspector de tráfego ao vivo com latência por rota" loading="lazy" />
+          <figcaption><b>Tráfego</b> — inspector ao vivo + latência p50/p95 por rota.</figcaption>
+        </figure>
+        <figure class="shot-card" data-reveal>
+          <img src="assets/shot-certificado.png" alt="Status do certificado: CA local confiável" loading="lazy" />
+          <figcaption><b>Certificado</b> — CA local confiável (mkcert), validação por SNI.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- COMEÇAR -->
+    <section class="section" id="comecar">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Começar</span>
+        <h2>Do clone ao split em <span class="accent">3 comandos</span>.</h2>
+        <p>Pré-requisito: <code>mkcert</code> no PATH e, no Linux, <code>webkit2gtk-4.1</code>.</p>
+      </div>
+      <div class="term" data-reveal data-term>
+        <div class="window-bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="window-title">bash — ~/seu-projeto</span>
+        </div>
+        <pre class="term-body"><code id="term-code"></code><span class="caret">▋</span></pre>
+      </div>
+      <div class="comecar-cta" data-reveal>
+        <a class="btn btn-primary" href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">Clonar no GitHub</a>
+        <a class="btn btn-ghost" href="https://github.com/Matheuscara/devsplit/tree/main/docs" target="_blank" rel="noopener">Ler a documentação</a>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <section class="marquee-wrap" aria-hidden="true">
+      <div class="marquee">
+        <span>Rust</span><span>·</span><span>Tauri v2</span><span>·</span><span>React</span><span>·</span><span>rustls</span><span>·</span><span>hyper</span><span>·</span><span>hickory-dns</span><span>·</span><span>rcgen</span><span>·</span><span>mkcert</span><span>·</span><span>ArcSwap</span><span>·</span><span>TypeScript</span><span>·</span><span>Tailwind</span><span>·</span>
+        <span>Rust</span><span>·</span><span>Tauri v2</span><span>·</span><span>React</span><span>·</span><span>rustls</span><span>·</span><span>hyper</span><span>·</span><span>hickory-dns</span><span>·</span><span>rcgen</span><span>·</span><span>mkcert</span><span>·</span><span>ArcSwap</span><span>·</span><span>TypeScript</span><span>·</span><span>Tailwind</span><span>·</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo.svg" alt="" width="34" height="34" />
+        <div>
+          <div class="footer-name">devsplit</div>
+          <div class="footer-tag">Split de tráfego de dev por path-prefix.</div>
+        </div>
+      </div>
+      <nav class="footer-links">
+        <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/Matheuscara/devsplit/tree/main/docs" target="_blank" rel="noopener">Docs</a>
+        <a href="#como">Como funciona</a>
+        <a href="#recursos">Recursos</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>Feito com Rust + Tauri.</span>
+      <span>Licença MIT / Apache-2.0</span>
+    </div>
+  </footer>
+
+  <script src="fx.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

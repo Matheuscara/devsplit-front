@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#15171a"/>
+      <stop offset="1" stop-color="#0b0c0e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+  <!-- trilho: uma entrada que se divide em dois caminhos -->
+  <g fill="none" stroke="#34d399" stroke-width="78" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M250 512 H468"/>
+    <path d="M468 512 C 600 512, 624 300, 770 300"/>
+    <path d="M468 512 C 600 512, 624 724, 770 724"/>
+  </g>
+  <!-- origem (o tráfego que chega) -->
+  <circle cx="250" cy="512" r="64" fill="#34d399"/>
+  <!-- caminho LOCAL (preenchido) -->
+  <circle cx="770" cy="300" r="62" fill="#34d399"/>
+  <!-- caminho PASSTHROUGH (vazado) -->
+  <circle cx="770" cy="724" r="58" fill="#0b0c0e" stroke="#34d399" stroke-width="40"/>
+</svg>
