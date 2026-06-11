@@ -1,290 +1,397 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>devsplit — split de tráfego de dev, sem Docker</title>
-  <meta name="description" content="Proxy de desenvolvimento que divide o tráfego do seu gateway de stage: os caminhos que você escolher rodam no seu localhost, o resto faz passthrough pro ambiente real. Sem Docker, sem mudar o front." />
-  <meta property="og:title" content="devsplit — split de tráfego de dev" />
-  <meta property="og:description" content="Rode só o serviço que você está mexendo. O resto, no stage." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>devsplit — divida o tráfego do stage, rode só o que você mexe</title>
+  <meta name="description" content="devsplit é um proxy de desenvolvimento que divide o tráfego do gateway de stage: você roda local só o serviço que está mexendo, o resto faz passthrough pro ambiente real. Sem Docker, sem mudar o front." />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="devsplit — proxy de desenvolvimento que divide o tráfego do stage" />
+  <meta property="og:description" content="Rode local só o serviço que você está mexendo. Todo o resto faz passthrough pro stage real. Sem Docker, sem mudar o front." />
   <meta property="og:image" content="assets/banner.png" />
-  <meta name="theme-color" content="#0b0c0e" />
+
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- NAV -->
+  <!-- ╭──────────────────────────────────────── NAV ────────────────────────────────────────╮ -->
   <header class="nav" id="nav">
-    <a class="brand" href="#top" aria-label="devsplit — início">
-      <img src="assets/logo.svg" alt="" width="30" height="30" />
-      <span>devsplit</span>
-    </a>
-    <nav class="nav-links">
-      <a href="#problema">Problema</a>
-      <a href="#como">Como funciona</a>
-      <a href="#recursos">Recursos</a>
-      <a href="#interface">Interface</a>
-      <a href="#comecar">Começar</a>
-    </nav>
-    <a class="btn btn-ghost btn-sm" href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
-      GitHub
-    </a>
+    <div class="nav__inner">
+      <a class="brand" href="#top" aria-label="devsplit — início">
+        <img class="brand__mark" src="assets/logo.svg" alt="" width="28" height="28" />
+        <span class="brand__name">devsplit</span>
+      </a>
+
+      <nav class="nav__links" aria-label="Navegação principal">
+        <a href="#comparativo">Por quê</a>
+        <a href="#fluxo">Como funciona</a>
+        <a href="#recursos">Recursos</a>
+        <a href="#telas">Telas</a>
+        <a href="#install">Instalar</a>
+      </nav>
+
+      <div class="nav__cta">
+        <a class="btn btn--ghost btn--sm" href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn--primary btn--sm" href="#install">Começar</a>
+      </div>
+    </div>
   </header>
 
   <main id="top">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-bg" id="bg" aria-hidden="true"></div>
-      <div class="hero-fade" aria-hidden="true"></div>
-      <div class="hero-inner">
-        <div class="pill" data-reveal>
-          <span class="pill-dollar">$</span> <code>cargo run</code>
-          <span class="pill-tag">Linux pronto · macOS/Windows via CI</span>
-        </div>
-        <h1 class="hero-title" data-reveal>
-          Rode <span class="accent">só o serviço</span><br />que você está mexendo.
+
+    <!-- ╭──────────────────────────────────── HERO ────────────────────────────────────╮ -->
+    <section class="hero" id="hero">
+      <div class="hero__bg" aria-hidden="true">
+        <div class="hero__shader" id="shader"></div>
+        <div class="hero__veil"></div>
+        <div class="hero__grid"></div>
+      </div>
+
+      <div class="hero__content">
+        <span class="pill" data-reveal>
+          <span class="pill__dot"></span>
+          <code>cp examples/devsplit.yaml devsplit.yaml</code>
+        </span>
+
+        <h1 class="hero__title" data-reveal>
+          Rode local só o serviço<br />que você <span class="accent">está mexendo</span>.
         </h1>
-        <p class="hero-sub" data-reveal>
-          O <strong>devsplit</strong> intercepta o gateway do seu <strong>stage</strong> e manda os
-          caminhos que você escolher pro seu <code>localhost</code>. O resto faz
-          <strong>passthrough</strong> pro ambiente real — com o certificado validado. <br />
-          <span class="muted">Sem Docker. Sem subir 10 microsserviços. Sem mudar o front.</span>
+
+        <p class="hero__sub" data-reveal>
+          O <strong>devsplit</strong> divide o tráfego do gateway de stage. O serviço em que você
+          trabalha cai na sua máquina; todo o resto faz <span class="mono-inline">passthrough</span>
+          pro ambiente real. Sem Docker, sem subir a stack inteira, sem mexer no front.
         </p>
-        <div class="hero-cta" data-reveal>
-          <a class="btn btn-primary" href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
-            Ver no GitHub
+
+        <div class="hero__actions" data-reveal>
+          <a class="btn btn--primary" href="#install">
+            Instalar o devsplit
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
           </a>
-          <a class="btn btn-ghost" href="#comecar">Como começar →</a>
+          <a class="btn btn--ghost" href="#fluxo">Ver como funciona</a>
         </div>
+      </div>
 
-        <!-- janela do produto -->
-        <div class="hero-shot" data-reveal>
-          <div class="window">
-            <div class="window-bar">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <span class="window-title">devsplit</span>
-            </div>
-            <img src="assets/shot-rotas.png" alt="Interface do devsplit: tela de rotas com split local e passthrough" loading="lazy" />
+      <figure class="window window--hero" data-reveal>
+        <div class="window__glow" aria-hidden="true"></div>
+        <div class="window__bar">
+          <span class="window__dots" aria-hidden="true">
+            <i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i>
+          </span>
+          <span class="window__title">devsplit — interceptando api.stage.acme.dev</span>
+        </div>
+        <div class="window__body">
+          <img src="assets/shot-rotas.png" alt="Tela de Rotas do devsplit: domínio api.stage.acme.dev interceptado, tabela de rotas marcando /transporte e /auth como local e /* como passthrough." loading="eager" />
+        </div>
+      </figure>
+    </section>
+
+    <!-- ╭──────────────────────────── COMPARATIVO antes × depois ────────────────────────────╮ -->
+    <section class="section" id="comparativo">
+      <div class="wrap">
+        <header class="head" data-reveal>
+          <span class="eyebrow">// o problema</span>
+          <h2 class="head__title">Você só mudou um serviço.<br />Por que subir a stack inteira?</h2>
+        </header>
+
+        <div class="compare">
+          <article class="compare__card compare__card--bad" data-reveal>
+            <span class="compare__tag">antes</span>
+            <h3>Tudo local, na marra</h3>
+            <p>Pra mexer numa coisa, você levanta o mundo — e ainda assim algo quebra.</p>
+            <ul class="checklist checklist--bad">
+              <li>Docker Compose com 12 serviços comendo a RAM</li>
+              <li>Banco, fila e auth de mentira pra "simular" o stage</li>
+              <li>Variáveis de ambiente desencontradas do real</li>
+              <li>20 minutos de boot antes da primeira request</li>
+            </ul>
+          </article>
+
+          <div class="compare__arrow" data-reveal aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
           </div>
-          <div class="shot-glow" aria-hidden="true"></div>
+
+          <article class="compare__card compare__card--good" data-reveal>
+            <span class="compare__tag compare__tag--good">com devsplit</span>
+            <h3>Local só onde importa</h3>
+            <p>Roda na sua máquina o serviço do PR. O resto é o stage de verdade.</p>
+            <ul class="checklist checklist--good">
+              <li>Um processo: o serviço que você está editando</li>
+              <li><span class="mono-inline">passthrough</span> pro stage real em tudo mais</li>
+              <li>Mesmo gateway, mesmo HTTPS, mesmos dados</li>
+              <li>Primeira request em segundos, não em minutos</li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- PROBLEMA -->
-    <section class="section" id="problema">
-      <div class="section-head" data-reveal>
-        <span class="eyebrow">O problema</span>
-        <h2>"Pra mexer em 1 task, eu subo a stack inteira."</h2>
-        <p>RabbitMQ, observabilidade e uma dúzia de microsserviços NestJS conversando entre si — só pra rodar um pedaço. PC fraco não aguenta, e o setup local vira um inferno.</p>
-      </div>
-      <div class="compare" data-reveal>
-        <div class="compare-card bad">
-          <div class="compare-tag">Sem devsplit</div>
-          <ul>
-            <li>Subir <b>tudo</b> localmente (RAM no talo)</li>
-            <li>Docker compose gigante + filas + bancos</li>
-            <li>Editar <code>.env</code> pra apontar serviços</li>
-            <li>"No meu PC trava" 🫠</li>
-          </ul>
-        </div>
-        <div class="compare-arrow" aria-hidden="true">→</div>
-        <div class="compare-card good">
-          <div class="compare-tag">Com devsplit</div>
-          <ul>
-            <li>Roda <b>só</b> o serviço que você toca</li>
-            <li>O resto continua sendo o <b>stage</b> real</li>
-            <li>Front não muda — aponta pra URL de stage</li>
-            <li>Liga/desliga rota num clique</li>
-          </ul>
-        </div>
+    <!-- ╭──────────────────────────────── DIAGRAMA DE FLUXO ────────────────────────────────╮ -->
+    <section class="section section--flow" id="fluxo">
+      <div class="wrap">
+        <header class="head" data-reveal>
+          <span class="eyebrow">// como funciona</span>
+          <h2 class="head__title">Uma request entra. O devsplit decide o caminho.</h2>
+          <p class="head__lead">Por prefixo de rota: o que casa com um serviço local cai na sua máquina;
+            o resto segue <span class="mono-inline">passthrough</span> pro gateway de stage — mesmo host, mesmo TLS.</p>
+        </header>
+
+        <figure class="flow" data-reveal aria-label="Diagrama: request chega no devsplit e é dividida entre serviço local e passthrough para o stage real.">
+          <svg class="flow__svg" viewBox="0 0 1000 360" role="img" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <path id="wireLocal"  d="M304 180 C 420 180, 460 88, 560 88"  fill="none" />
+              <path id="wirePass"   d="M304 180 C 420 180, 460 272, 560 272" fill="none" />
+              <filter id="pktGlow" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="4" result="b" /><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <!-- wire: entrada -> devsplit -->
+            <line class="wire" x1="136" y1="180" x2="196" y2="180" />
+            <!-- wires divididos -->
+            <use class="wire" href="#wireLocal" />
+            <use class="wire wire--pass" href="#wirePass" />
+
+            <!-- packet animado (percorre o caminho local em loop) -->
+            <circle class="packet" r="5" filter="url(#pktGlow)">
+              <animateMotion dur="2.4s" repeatCount="indefinite" rotate="auto" calcMode="linear">
+                <mpath href="#wireLocal" />
+              </animateMotion>
+            </circle>
+
+            <!-- nó: REQUEST -->
+            <g class="node" transform="translate(48,156)">
+              <rect width="88" height="48" rx="10" />
+              <text x="44" y="29" class="node__t">Request</text>
+            </g>
+
+            <!-- nó: DEVSPLIT (centro) -->
+            <g class="node node--core" transform="translate(196,138)">
+              <rect width="108" height="84" rx="14" />
+              <text x="54" y="38" class="node__t node__t--core">devsplit</text>
+              <text x="54" y="58" class="node__sub">:8443</text>
+            </g>
+
+            <!-- nó: LOCAL -->
+            <g class="node node--local" transform="translate(560,60)">
+              <rect width="220" height="56" rx="12" />
+              <circle cx="26" cy="28" r="6" class="node__led node__led--on" />
+              <text x="46" y="24" class="node__t node__t--sm">serviço LOCAL</text>
+              <text x="46" y="42" class="node__sub">localhost:3000</text>
+            </g>
+
+            <!-- nó: STAGE -->
+            <g class="node node--stage" transform="translate(560,244)">
+              <rect width="220" height="56" rx="12" />
+              <circle cx="26" cy="28" r="6" class="node__led node__led--pass" />
+              <text x="46" y="24" class="node__t node__t--sm">passthrough → stage</text>
+              <text x="46" y="42" class="node__sub">api.stage.acme.dev</text>
+            </g>
+          </svg>
+
+          <figcaption class="flow__legend">
+            <span class="legend__item"><i class="legend__chip legend__chip--local"></i> local — cai na sua máquina</span>
+            <span class="legend__item"><i class="legend__chip legend__chip--pass"></i> passthrough — segue pro stage real</span>
+          </figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- COMO FUNCIONA -->
-    <section class="section" id="como">
-      <div class="section-head" data-reveal>
-        <span class="eyebrow">Como funciona</span>
-        <h2>Um proxy local que <span class="accent">divide o caminho</span>.</h2>
-        <p>O domínio do stage resolve pro seu PC. O devsplit termina o TLS com um cert confiável e decide, por prefixo, o que vai pro <b>local</b> e o que segue pro <b>stage real</b>.</p>
-      </div>
-
-      <div class="flow" data-reveal>
-        <svg class="flow-svg" viewBox="0 0 920 320" role="img" aria-label="Diagrama: o front fala com o devsplit, que divide entre serviço local e passthrough para o stage">
-          <defs>
-            <linearGradient id="wire" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#34d399" stop-opacity=".25"/>
-              <stop offset="1" stop-color="#34d399" stop-opacity=".9"/>
-            </linearGradient>
-          </defs>
-          <!-- nós -->
-          <g class="flow-node" data-node="front">
-            <rect x="20" y="128" width="180" height="64" rx="14"/>
-            <text x="110" y="156" class="t-title">front</text>
-            <text x="110" y="176" class="t-sub">https://api.stage…</text>
-          </g>
-          <g class="flow-node accent-node" data-node="proxy">
-            <rect x="372" y="118" width="176" height="84" rx="16"/>
-            <text x="460" y="150" class="t-title">devsplit</text>
-            <text x="460" y="172" class="t-sub">:443 · TLS local</text>
-          </g>
-          <g class="flow-node local" data-node="local">
-            <rect x="720" y="56" width="180" height="64" rx="14"/>
-            <text x="810" y="84" class="t-title">localhost:3000</text>
-            <text x="810" y="104" class="t-sub">LOCAL</text>
-          </g>
-          <g class="flow-node" data-node="stage">
-            <rect x="720" y="200" width="180" height="64" rx="14"/>
-            <text x="810" y="228" class="t-title">stage real</text>
-            <text x="810" y="248" class="t-sub">PASSTHROUGH</text>
-          </g>
-          <!-- fios -->
-          <path class="wire w1" d="M200 160 H372" />
-          <path class="wire w2" d="M548 150 C 640 150, 640 88, 720 88" />
-          <path class="wire w3" d="M548 172 C 640 172, 640 232, 720 232" />
-          <circle class="packet" r="5" />
-        </svg>
-        <div class="flow-legend">
-          <span><i class="leg local"></i> <code>/transporte</code>, <code>/auth</code> → seu localhost</span>
-          <span><i class="leg pass"></i> <code>/*</code> → stage real (cert validado por SNI)</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- RECURSOS -->
+    <!-- ╭──────────────────────────────── GRID DE RECURSOS ────────────────────────────────╮ -->
     <section class="section" id="recursos">
-      <div class="section-head" data-reveal>
-        <span class="eyebrow">Recursos</span>
-        <h2>Tudo que um proxy de dev sério precisa.</h2>
-      </div>
-      <div class="grid">
-        <article class="card" data-reveal>
-          <div class="card-ico">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M6 8.5v3a4 4 0 0 0 4 4h4M18 8.5V12"/></svg>
-          </div>
-          <h3>Split por path-prefix</h3>
-          <p>Escolha os prefixos que rodam local (<code>/transporte</code>, <code>/auth</code>). O mais específico vence; o resto faz passthrough.</p>
-        </article>
-        <article class="card" data-reveal>
-          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.8-7 9-4-1.2-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
-          <h3>TLS local confiável</h3>
-          <p>O <code>mkcert</code> instala uma CA que o navegador confia. HTTPS de verdade no <code>localhost</code> — sem aviso de cert.</p>
-        </article>
-        <article class="card" data-reveal>
-          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v2"/></svg></div>
-          <h3>Passthrough seguro</h3>
-          <p>Conecta no IP real do stage e <b>valida</b> o cert remoto por SNI. Nunca desabilita a verificação.</p>
-        </article>
-        <article class="card" data-reveal>
-          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5l2 2M20 12a8 8 0 0 1-14 5l-2-2"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></div>
-          <h3>Anti-loop por DNS direto</h3>
-          <p>Resolve o IP real ignorando o <code>/etc/hosts</code> — então o proxy nunca conecta em si mesmo.</p>
-        </article>
-        <article class="card" data-reveal>
-          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3 7 4-14 3 7h4"/></svg></div>
-          <h3>WebSocket transparente</h3>
-          <p>Upgrade e túnel byte-a-byte após o <code>101</code>. socket.io funciona sem nenhuma config extra.</p>
-        </article>
-        <article class="card" data-reveal>
-          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
-          <h3>Inspector ao vivo</h3>
-          <p>Cada request com decisão, status e <b>latência p50/p95 por rota</b>. Copy-as-curl e export HAR.</p>
-        </article>
-        <article class="card" data-reveal>
-          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
-          <h3>Hot-reload de rotas</h3>
-          <p>Liga/desliga rota a quente, sem derrubar conexões em voo — nem as de WebSocket.</p>
-        </article>
-        <article class="card" data-reveal>
-          <div class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
-          <h3>App nativo cross-platform</h3>
-          <p>Tauri v2 + Rust: Linux, macOS e Windows num binário leve (~15&nbsp;MB). Sem Docker.</p>
-        </article>
-      </div>
-    </section>
+      <div class="wrap">
+        <header class="head" data-reveal>
+          <span class="eyebrow">// recursos</span>
+          <h2 class="head__title">Devtool de verdade, não um mock.</h2>
+        </header>
 
-    <!-- INTERFACE -->
-    <section class="section" id="interface">
-      <div class="section-head" data-reveal>
-        <span class="eyebrow">A interface</span>
-        <h2>Bonita, densa e <span class="accent">ao vivo</span>.</h2>
-        <p>Estilo dev-tool: liga/desliga numa tela, vê o tráfego passando em tempo real e confere a saúde do setup sem sair do app.</p>
-      </div>
-      <div class="shots">
-        <figure class="shot-card big" data-reveal>
-          <img src="assets/shot-rotas.png" alt="Tela de Rotas: domínio interceptado, painel de saúde e tabela local × passthrough" loading="lazy" />
-          <figcaption><b>Rotas</b> — liga/desliga, perfil ativo, painel de saúde e a tabela de rotas.</figcaption>
-        </figure>
-        <figure class="shot-card" data-reveal>
-          <img src="assets/shot-trafego.png" alt="Inspector de tráfego ao vivo com latência por rota" loading="lazy" />
-          <figcaption><b>Tráfego</b> — inspector ao vivo + latência p50/p95 por rota.</figcaption>
-        </figure>
-        <figure class="shot-card" data-reveal>
-          <img src="assets/shot-certificado.png" alt="Status do certificado: CA local confiável" loading="lazy" />
-          <figcaption><b>Certificado</b> — CA local confiável (mkcert), validação por SNI.</figcaption>
-        </figure>
-      </div>
-    </section>
+        <div class="features">
+          <article class="feature" data-reveal>
+            <span class="feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h6m6 0h6"/><circle cx="12" cy="12" r="3"/><path d="M12 3v6m0 6v6"/></svg>
+            </span>
+            <h3>Split por prefixo</h3>
+            <p>Defina <span class="mono-inline">/auth</span> ou <span class="mono-inline">/transporte</span> como local; o curinga <span class="mono-inline">/*</span> faz passthrough. Liga e desliga rota por rota.</p>
+          </article>
 
-    <!-- COMEÇAR -->
-    <section class="section" id="comecar">
-      <div class="section-head" data-reveal>
-        <span class="eyebrow">Começar</span>
-        <h2>Do clone ao split em <span class="accent">3 comandos</span>.</h2>
-        <p>Pré-requisito: <code>mkcert</code> no PATH e, no Linux, <code>webkit2gtk-4.1</code>.</p>
-      </div>
-      <div class="term" data-reveal data-term>
-        <div class="window-bar">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          <span class="window-title">bash — ~/seu-projeto</span>
+          <article class="feature" data-reveal>
+            <span class="feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/><path d="M8 18v3m8-3v3M6 21h12"/></svg>
+            </span>
+            <h3>Sem Docker</h3>
+            <p>Um app desktop (Tauri) + <span class="mono-inline">devsplit.yaml</span> + CLI. Nada de Compose, nada de stack inteira na sua RAM.</p>
+          </article>
+
+          <article class="feature" data-reveal>
+            <span class="feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7l8-4z"/><path d="m9 12 2 2 4-4"/></svg>
+            </span>
+            <h3>HTTPS confiável</h3>
+            <p>CA local via <span class="mono-inline">mkcert</span> assina o domínio interceptado. O browser confia, o front nem percebe.</p>
+          </article>
+
+          <article class="feature" data-reveal>
+            <span class="feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+            </span>
+            <h3>Inspector de tráfego</h3>
+            <p>Veja cada request com host, método, decisão (local/passthrough), status e latência P50/P95 por rota.</p>
+          </article>
+
+          <article class="feature" data-reveal>
+            <span class="feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </span>
+            <h3>Detecção de serviços</h3>
+            <p>O devsplit varre as portas locais e sugere rotas. Subiu o serviço? Ele aparece pronto pra ativar.</p>
+          </article>
+
+          <article class="feature" data-reveal>
+            <span class="feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6"/><path d="M12 19h8"/></svg>
+            </span>
+            <h3>Perfis nomeados</h3>
+            <p>Salve combinações de rotas por contexto — <span class="mono-inline">transporte</span>, <span class="mono-inline">auth</span> — e troque com um clique.</p>
+          </article>
+
+          <article class="feature" data-reveal>
+            <span class="feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 8l7-5 7 5"/><path d="M5 16l7 5 7-5"/></svg>
+            </span>
+            <h3>Saúde antes do split</h3>
+            <p>Checagem de CA, entrada no <span class="mono-inline">hosts</span>, porta livre e gateway alcançável — avisos antes de confiar no proxy.</p>
+          </article>
+
+          <article class="feature" data-reveal>
+            <span class="feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><path d="M16 4l4 4-4 4"/></svg>
+            </span>
+            <h3>Front intacto</h3>
+            <p>O app aponta pro mesmo <span class="mono-inline">api.stage.acme.dev</span> de sempre. Zero mudança de código no cliente.</p>
+          </article>
         </div>
-        <pre class="term-body"><code id="term-code"></code><span class="caret">▋</span></pre>
-      </div>
-      <div class="comecar-cta" data-reveal>
-        <a class="btn btn-primary" href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">Clonar no GitHub</a>
-        <a class="btn btn-ghost" href="https://github.com/Matheuscara/devsplit/tree/main/docs" target="_blank" rel="noopener">Ler a documentação</a>
       </div>
     </section>
 
-    <!-- MARQUEE -->
-    <section class="marquee-wrap" aria-hidden="true">
-      <div class="marquee">
-        <span>Rust</span><span>·</span><span>Tauri v2</span><span>·</span><span>React</span><span>·</span><span>rustls</span><span>·</span><span>hyper</span><span>·</span><span>hickory-dns</span><span>·</span><span>rcgen</span><span>·</span><span>mkcert</span><span>·</span><span>ArcSwap</span><span>·</span><span>TypeScript</span><span>·</span><span>Tailwind</span><span>·</span>
-        <span>Rust</span><span>·</span><span>Tauri v2</span><span>·</span><span>React</span><span>·</span><span>rustls</span><span>·</span><span>hyper</span><span>·</span><span>hickory-dns</span><span>·</span><span>rcgen</span><span>·</span><span>mkcert</span><span>·</span><span>ArcSwap</span><span>·</span><span>TypeScript</span><span>·</span><span>Tailwind</span><span>·</span>
+    <!-- ╭──────────────────────────────── SHOWCASE DE TELAS ────────────────────────────────╮ -->
+    <section class="section" id="telas">
+      <div class="wrap">
+        <header class="head" data-reveal>
+          <span class="eyebrow">// telas</span>
+          <h2 class="head__title">O painel inteiro, sem firula.</h2>
+        </header>
+
+        <div class="shots">
+          <figure class="shot shot--big" data-reveal>
+            <div class="shot__frame"><img src="assets/shot-trafego.png" alt="Inspector de tráfego do devsplit: latência P50/P95 por rota e log de requests com método, host, decisão e status." loading="lazy" /></div>
+            <figcaption><strong>Tráfego</strong> — cada request com decisão, status e latência por rota.</figcaption>
+          </figure>
+
+          <figure class="shot" data-reveal>
+            <div class="shot__frame"><img src="assets/shot-rotas.png" alt="Tela de Rotas do devsplit com tabela de prefixos local e passthrough." loading="lazy" /></div>
+            <figcaption><strong>Rotas</strong> — ligue o split por prefixo, com checagem de saúde.</figcaption>
+          </figure>
+
+          <figure class="shot" data-reveal>
+            <div class="shot__frame"><img src="assets/shot-certificado.png" alt="Tela de Certificado do devsplit mostrando a CA mkcert instalada e confiável." loading="lazy" /></div>
+            <figcaption><strong>Certificado</strong> — CA <span class="mono-inline">mkcert</span> que torna o HTTPS confiável.</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
+
+    <!-- ╭──────────────────────────────────── TERMINAL ────────────────────────────────────╮ -->
+    <section class="section section--install" id="install">
+      <div class="wrap wrap--narrow">
+        <header class="head head--center" data-reveal>
+          <span class="eyebrow">// instalar</span>
+          <h2 class="head__title">Do clone ao split em quatro comandos.</h2>
+        </header>
+
+        <figure class="window window--term" data-reveal>
+          <div class="window__bar">
+            <span class="window__dots" aria-hidden="true"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+            <span class="window__title">zsh — devsplit</span>
+          </div>
+          <div class="term" id="term" aria-label="Sequência de comandos para instalar e rodar o devsplit">
+            <pre class="term__out" id="termOut"></pre><span class="term__caret" id="caret" aria-hidden="true"></span>
+          </div>
+        </figure>
+
+        <div class="install__cta" data-reveal>
+          <a class="btn btn--primary" href="https://github.com" target="_blank" rel="noopener">
+            Clonar no GitHub
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </a>
+          <span class="install__note">Linux, macOS e Windows · um único prompt de senha no primeiro start</span>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- FOOTER -->
+  <!-- ╭──────────────────────────────────── MARQUEE ────────────────────────────────────╮ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span class="marquee__set">
+        <em>passthrough</em><i>·</i><em>split por prefixo</em><i>·</i><em>sem Docker</em><i>·</i>
+        <em>HTTPS confiável</em><i>·</i><em>devsplit.yaml</em><i>·</i><em>inspector de tráfego</em><i>·</i>
+        <em>stage real</em><i>·</i><em>front intacto</em><i>·</i>
+      </span>
+      <span class="marquee__set">
+        <em>passthrough</em><i>·</i><em>split por prefixo</em><i>·</i><em>sem Docker</em><i>·</i>
+        <em>HTTPS confiável</em><i>·</i><em>devsplit.yaml</em><i>·</i><em>inspector de tráfego</em><i>·</i>
+        <em>stage real</em><i>·</i><em>front intacto</em><i>·</i>
+      </span>
+    </div>
+  </div>
+
+  <!-- ╭──────────────────────────────────── FOOTER ────────────────────────────────────╮ -->
   <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <img src="assets/logo.svg" alt="" width="34" height="34" />
-        <div>
-          <div class="footer-name">devsplit</div>
-          <div class="footer-tag">Split de tráfego de dev por path-prefix.</div>
-        </div>
+    <div class="wrap footer__inner">
+      <div class="footer__brand">
+        <a class="brand" href="#top" aria-label="devsplit — início">
+          <img class="brand__mark" src="assets/logo.svg" alt="" width="28" height="28" />
+          <span class="brand__name">devsplit</span>
+        </a>
+        <p class="footer__tag">O proxy de desenvolvimento que divide o tráfego do stage. Rode local só o que você mexe.</p>
       </div>
-      <nav class="footer-links">
-        <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://github.com/Matheuscara/devsplit/tree/main/docs" target="_blank" rel="noopener">Docs</a>
-        <a href="#como">Como funciona</a>
-        <a href="#recursos">Recursos</a>
+
+      <nav class="footer__cols" aria-label="Rodapé">
+        <div class="footer__col">
+          <h4>Produto</h4>
+          <a href="#comparativo">Por quê</a>
+          <a href="#fluxo">Como funciona</a>
+          <a href="#recursos">Recursos</a>
+          <a href="#telas">Telas</a>
+        </div>
+        <div class="footer__col">
+          <h4>Começar</h4>
+          <a href="#install">Instalar</a>
+          <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com" target="_blank" rel="noopener">devsplit.yaml</a>
+        </div>
+        <div class="footer__col">
+          <h4>Recursos</h4>
+          <a href="https://github.com" target="_blank" rel="noopener">Documentação</a>
+          <a href="https://github.com" target="_blank" rel="noopener">Releases</a>
+          <a href="https://github.com" target="_blank" rel="noopener">Issues</a>
+        </div>
       </nav>
     </div>
-    <div class="footer-bottom">
-      <span>Feito com Rust + Tauri.</span>
-      <span>Licença MIT / Apache-2.0</span>
+    <div class="wrap footer__bottom">
+      <span>© <span id="year">2026</span> devsplit</span>
+      <span class="footer__meta">feito pra quem cansou de subir a stack inteira</span>
     </div>
   </footer>
 
-  <script src="main.js?v=3"></script>
-  <script src="cursor-fx.js?v=3"></script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>
