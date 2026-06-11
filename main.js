@@ -85,6 +85,60 @@ if (term && termCode) {
   }
 }
 
+// ===== animacoes de mouse (leves, via rAF + custom props) =====
+if (!reduce) {
+  const hero = document.querySelector('.hero');
+  const heroBg = document.getElementById('bg');
+  const shotWindow = document.querySelector('.hero-shot .window');
+
+  // spotlight + parallax no hero
+  if (hero && heroBg) {
+    let raf = 0, mx = 50, my = 28, px = 0, py = 0;
+    const apply = () => {
+      raf = 0;
+      heroBg.style.setProperty('--mx', mx + '%');
+      heroBg.style.setProperty('--my', my + '%');
+      if (shotWindow) {
+        shotWindow.style.setProperty('--px', px.toFixed(1) + 'px');
+        shotWindow.style.setProperty('--py', py.toFixed(1) + 'px');
+      }
+    };
+    hero.addEventListener('pointermove', (e) => {
+      const r = hero.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width;   // 0..1
+      const ny = (e.clientY - r.top) / r.height;   // 0..1
+      mx = nx * 100;
+      my = ny * 100;
+      px = (nx - 0.5) * 18;   // parallax suave: ±9px
+      py = (ny - 0.5) * 18;
+      if (!raf) raf = requestAnimationFrame(apply);
+    }, { passive: true });
+    hero.addEventListener('pointerleave', () => {
+      px = py = 0;
+      if (!raf) raf = requestAnimationFrame(apply);
+    }, { passive: true });
+  }
+
+  // brilho que segue o cursor dentro de cada card
+  let cardRaf = 0, cardEl = null, cmx = 50, cmy = 0;
+  const applyCard = () => {
+    cardRaf = 0;
+    if (cardEl) {
+      cardEl.style.setProperty('--mx', cmx + '%');
+      cardEl.style.setProperty('--my', cmy + '%');
+    }
+  };
+  document.querySelectorAll('.card').forEach((card) => {
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      cardEl = card;
+      cmx = ((e.clientX - r.left) / r.width) * 100;
+      cmy = ((e.clientY - r.top) / r.height) * 100;
+      if (!cardRaf) cardRaf = requestAnimationFrame(applyCard);
+    }, { passive: true });
+  });
+}
+
 // ===== smooth-scroll com offset do nav =====
 document.querySelectorAll('a[href^="#"]').forEach((a) => {
   a.addEventListener('click', (ev) => {
