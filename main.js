@@ -178,18 +178,23 @@ const finePointer = window.matchMedia('(pointer: fine)').matches;
 const fxEnabled = !reduceMotion && finePointer;
 
 // ───────────────── rastro do cursor (canvas, site inteiro) ─────────────────
+// a bolinha-cabeça É o cursor: fica na posição AO VIVO do mouse, sem offset.
 function initCursorTrail() {
   const canvas = document.createElement('canvas');
   canvas.className = 'fx-trail';
   canvas.setAttribute('aria-hidden', 'true');
   document.body.appendChild(canvas);
+  document.documentElement.classList.add('fx-cursor-hidden'); // esconde o ponteiro nativo
   const ctx = canvas.getContext('2d');
 
   let dpr = Math.min(window.devicePixelRatio || 1, 2);
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // tamanho de buffer (nítido) e tamanho CSS (1:1 com o viewport) explícitos
     canvas.width = innerWidth * dpr;
     canvas.height = innerHeight * dpr;
+    canvas.style.width = innerWidth + 'px';
+    canvas.style.height = innerHeight + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   resize();
@@ -197,21 +202,27 @@ function initCursorTrail() {
 
   const points = [];          // {x, y, life}
   const MAX = 18;
-  let mouse = null;
+  let mouse = null;           // posição ao vivo do cursor (ou null se saiu da janela)
   let rafId = null;
-  let idleFrames = 0;
+
+  function ensureLoop() { if (!rafId) loop(); }
 
   window.addEventListener('pointermove', (e) => {
     if (e.pointerType === 'touch') return;
     mouse = { x: e.clientX, y: e.clientY };
-    idleFrames = 0;
-    if (!rafId) loop();
+    ensureLoop();
   }, { passive: true });
+
+  // ao sair da janela, some o cursor e deixa o rastro terminar de apagar
+  function leave() { mouse = null; }
+  document.addEventListener('mouseleave', leave);
+  window.addEventListener('blur', leave);
 
   function loop() {
     rafId = requestAnimationFrame(loop);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
+    // amostra a posição ao vivo no rastro
     if (mouse) {
       points.push({ x: mouse.x, y: mouse.y, life: 1 });
       if (points.length > MAX) points.shift();
@@ -219,6 +230,7 @@ function initCursorTrail() {
     for (const p of points) p.life -= 0.06;
     while (points.length && points[0].life <= 0) points.shift();
 
+    // linha do rastro (afilando até a cabeça)
     if (points.length > 1) {
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
@@ -234,17 +246,24 @@ function initCursorTrail() {
         ctx.lineWidth = 1 + t * 4.5;
         ctx.stroke();
       }
-      // ponto-cabeça brilhante
-      const head = points[points.length - 1];
+    }
+
+    // a bolinha-cursor: SEMPRE na posição ao vivo do mouse (zero offset/atraso)
+    if (mouse) {
+      ctx.shadowColor = 'rgba(52,211,153,.9)';
+      ctx.shadowBlur = 16;
       ctx.beginPath();
-      ctx.arc(head.x, head.y, 3, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(190,255,225,.95)';
+      ctx.arc(mouse.x, mouse.y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(52,211,153,.28)';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(198,255,230,.98)';
       ctx.fill();
     }
 
-    // encerra o loop quando o mouse para e o rastro termina de sumir
-    idleFrames++;
-    if (idleFrames > 90 && points.length === 0) {
+    // encerra o loop só quando o cursor saiu e o rastro sumiu
+    if (!mouse && points.length === 0) {
       cancelAnimationFrame(rafId);
       rafId = null;
       ctx.clearRect(0, 0, innerWidth, innerHeight);

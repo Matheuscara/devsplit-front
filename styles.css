@@ -418,10 +418,13 @@ ul{list-style:none}
 [data-reveal].is-in{opacity:1;transform:none}
 
 /* ════════════════════════════ FX · cursor + packets ════════════════════════════ */
-/* rastro do cursor (canvas, site inteiro) */
+/* rastro do cursor (canvas, site inteiro) — fica acima de tudo */
 .fx-trail{
-  position:fixed;inset:0;z-index:90;pointer-events:none;
+  position:fixed;inset:0;z-index:99999;pointer-events:none;
 }
+/* quando o rastro vira o cursor, esconde o ponteiro nativo no site todo */
+html.fx-cursor-hidden,
+html.fx-cursor-hidden *{cursor:none !important}
 
 /* packets de request voando no hero (tráfego sendo dividido) */
 .fx-packets{
