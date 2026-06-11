@@ -459,14 +459,6 @@ html.fx-cursor-hidden *{cursor:none !important}
   100% {transform:translate(calc(100vw + 260px), calc(var(--y,40vh) + var(--drift,-30px)));opacity:0}
 }
 
-/* parallax do screenshot dentro da janela do hero (setado via JS) */
-.window--hero .window__body{overflow:hidden}
-.window--hero .window__body img{
-  transform:scale(1.06) translate3d(var(--px,0px),var(--py,0px),0);
-  transition:transform .5s var(--ease);
-  will-change:transform;
-}
-
 @media (max-width:680px){
   .fx-packets{display:none}
   .fx-trail{display:none}

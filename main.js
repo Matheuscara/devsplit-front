@@ -171,7 +171,7 @@ async function mountShader() {
 mountShader();
 
 // ════════════════════════════════════════════════════════════════════════
-// FX de movimento: rastro do cursor + packets voando + parallax da janela
+// FX de movimento: rastro do cursor (vira o ponteiro) + packets voando no hero
 // (tudo desligado em reduced-motion e em telas sem ponteiro fino / touch)
 // ════════════════════════════════════════════════════════════════════════
 const finePointer = window.matchMedia('(pointer: fine)').matches;
@@ -326,29 +326,8 @@ function initPackets() {
   setInterval(spawn, 2600);
 }
 
-// ───────────────── parallax da janela do hero ─────────────────
-function initParallax() {
-  const img = document.querySelector('.window--hero .window__body img');
-  const hero = document.getElementById('hero');
-  if (!img || !hero) return;
-
-  hero.addEventListener('pointermove', (e) => {
-    const r = hero.getBoundingClientRect();
-    const cx = (e.clientX - r.left) / r.width - 0.5;   // -0.5..0.5
-    const cy = (e.clientY - r.top) / r.height - 0.5;
-    img.style.setProperty('--px', `${(-cx * 16).toFixed(1)}px`);
-    img.style.setProperty('--py', `${(-cy * 12).toFixed(1)}px`);
-  }, { passive: true });
-
-  hero.addEventListener('pointerleave', () => {
-    img.style.setProperty('--px', '0px');
-    img.style.setProperty('--py', '0px');
-  });
-}
-
 if (fxEnabled) {
   initCursorTrail();
-  initParallax();
 }
 // packets fazem sentido mesmo sem ponteiro fino; só dependem de movimento permitido
 if (!reduceMotion) initPackets();
