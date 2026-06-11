@@ -169,3 +169,167 @@ async function mountShader() {
   }
 }
 mountShader();
+
+// ════════════════════════════════════════════════════════════════════════
+// FX de movimento: rastro do cursor + packets voando + parallax da janela
+// (tudo desligado em reduced-motion e em telas sem ponteiro fino / touch)
+// ════════════════════════════════════════════════════════════════════════
+const finePointer = window.matchMedia('(pointer: fine)').matches;
+const fxEnabled = !reduceMotion && finePointer;
+
+// ───────────────── rastro do cursor (canvas, site inteiro) ─────────────────
+function initCursorTrail() {
+  const canvas = document.createElement('canvas');
+  canvas.className = 'fx-trail';
+  canvas.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = innerWidth * dpr;
+    canvas.height = innerHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const points = [];          // {x, y, life}
+  const MAX = 18;
+  let mouse = null;
+  let rafId = null;
+  let idleFrames = 0;
+
+  window.addEventListener('pointermove', (e) => {
+    if (e.pointerType === 'touch') return;
+    mouse = { x: e.clientX, y: e.clientY };
+    idleFrames = 0;
+    if (!rafId) loop();
+  }, { passive: true });
+
+  function loop() {
+    rafId = requestAnimationFrame(loop);
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+    if (mouse) {
+      points.push({ x: mouse.x, y: mouse.y, life: 1 });
+      if (points.length > MAX) points.shift();
+    }
+    for (const p of points) p.life -= 0.06;
+    while (points.length && points[0].life <= 0) points.shift();
+
+    if (points.length > 1) {
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.shadowColor = 'rgba(52,211,153,.9)';
+      ctx.shadowBlur = 12;
+      for (let i = 1; i < points.length; i++) {
+        const a = points[i - 1], b = points[i];
+        const t = i / points.length;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = `rgba(52,211,153,${(b.life * 0.6).toFixed(3)})`;
+        ctx.lineWidth = 1 + t * 4.5;
+        ctx.stroke();
+      }
+      // ponto-cabeça brilhante
+      const head = points[points.length - 1];
+      ctx.beginPath();
+      ctx.arc(head.x, head.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(190,255,225,.95)';
+      ctx.fill();
+    }
+
+    // encerra o loop quando o mouse para e o rastro termina de sumir
+    idleFrames++;
+    if (idleFrames > 90 && points.length === 0) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+    }
+  }
+}
+
+// ───────────────── packets de request voando no hero ─────────────────
+function initPackets() {
+  const hero = document.getElementById('hero');
+  if (!hero) return;
+
+  const layer = document.createElement('div');
+  layer.className = 'fx-packets';
+  layer.setAttribute('aria-hidden', 'true');
+  hero.appendChild(layer);
+
+  const POOL = [
+    ['GET', '/transporte', 'local'],
+    ['POST', '/auth/login', 'local'],
+    ['GET', '/session', 'local'],
+    ['GET', '/health', 'pass'],
+    ['GET', '/financeiro', 'pass'],
+    ['POST', '/pay/charge', 'pass'],
+    ['GET', '/outra/coisa', 'pass'],
+    ['POST', '/transporte/run', 'local'],
+  ];
+
+  let idx = 0;
+  let alive = 0;
+  const MAX_ALIVE = 5;
+
+  function spawn() {
+    if (alive >= MAX_ALIVE || document.hidden) return;
+    const [method, path, dec] = POOL[idx % POOL.length];
+    idx++;
+
+    const el = document.createElement('div');
+    el.className = 'fx-packet';
+    const y = 12 + Math.floor((idx * 37) % 70);          // 12%–82% da altura, determinístico
+    const dur = 14 + (idx % 5) * 2;                        // 14s–22s
+    const drift = -40 + (idx % 4) * 22;                   // leve subida/descida
+    el.style.setProperty('--y', `${y}vh`);
+    el.style.setProperty('--dur', `${dur}s`);
+    el.style.setProperty('--drift', `${drift}px`);
+    el.innerHTML =
+      `<b class="${method === 'GET' ? 'm-get' : 'm-post'}">${method}</b>` +
+      `<span>${path}</span>` +
+      `<span class="arr">→</span>` +
+      `<span class="dec dec--${dec === 'local' ? 'local' : 'pass'}">${dec === 'local' ? 'local' : 'passthrough'}</span>`;
+
+    layer.appendChild(el);
+    alive++;
+    el.addEventListener('animationiteration', () => { el.remove(); alive--; }, { once: true });
+    // fallback de limpeza
+    setTimeout(() => { if (el.isConnected) { el.remove(); alive--; } }, dur * 1000 + 500);
+  }
+
+  spawn();
+  setInterval(spawn, 2600);
+}
+
+// ───────────────── parallax da janela do hero ─────────────────
+function initParallax() {
+  const img = document.querySelector('.window--hero .window__body img');
+  const hero = document.getElementById('hero');
+  if (!img || !hero) return;
+
+  hero.addEventListener('pointermove', (e) => {
+    const r = hero.getBoundingClientRect();
+    const cx = (e.clientX - r.left) / r.width - 0.5;   // -0.5..0.5
+    const cy = (e.clientY - r.top) / r.height - 0.5;
+    img.style.setProperty('--px', `${(-cx * 16).toFixed(1)}px`);
+    img.style.setProperty('--py', `${(-cy * 12).toFixed(1)}px`);
+  }, { passive: true });
+
+  hero.addEventListener('pointerleave', () => {
+    img.style.setProperty('--px', '0px');
+    img.style.setProperty('--py', '0px');
+  });
+}
+
+if (fxEnabled) {
+  initCursorTrail();
+  initParallax();
+}
+// packets fazem sentido mesmo sem ponteiro fino; só dependem de movimento permitido
+if (!reduceMotion) initPackets();
