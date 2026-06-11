@@ -28,8 +28,26 @@ nginx estático em Docker, pronto pro **Dokploy**. Passo a passo em [`DEPLOY.md`
 ## Estrutura
 
 ```
-index.html · styles.css · main.js     # o site
-assets/                               # logo, banner, capturas
-Dockerfile · nginx.conf · docker-compose.yml   # deploy
-DEPLOY.md
+index.html · styles.css · main.js     # o site (sem build)
+assets/                               # logo, banner, capturas de tela
+Dockerfile · nginx.conf · docker-compose.yml   # deploy nginx
+DEPLOY.md                             # passo a passo de deploy
+CHANGELOG.md                          # tudo que foi construído (seções, FX, a11y, etc.)
 ```
+
+### `main.js` — módulos
+
+- **nav** — estado `scrolled` ao rolar; **menu mobile** (hambúrguer + drawer, Escape, scroll lock).
+- **smooth scroll** — âncoras com offset de 72px pro nav fixo.
+- **reveal** — `IntersectionObserver` em `[data-reveal]` com stagger por irmão.
+- **terminal** — efeito de digitação disparado na viewport (instantâneo em reduced-motion).
+- **shader** — `GrainGradient` via `esm.sh`, com fallback CSS.
+- **FX de cursor** — rastro em canvas + bolinha que é o ponteiro (vira anel sobre clicáveis).
+- **packets** — chips de request animados no hero.
+
+> Toda animação tem caminho `prefers-reduced-motion`; o FX de cursor só roda em ponteiro fino.
+
+## Documentação
+
+Histórico completo do que foi construído (conceito, seções, design system, microinterações,
+acessibilidade) em [`CHANGELOG.md`](./CHANGELOG.md).

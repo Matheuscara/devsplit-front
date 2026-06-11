@@ -324,6 +324,7 @@ html.menu-open{overflow:hidden}
 @keyframes dash{to{stroke-dashoffset:-14}}
 
 .packet{fill:var(--accent)}
+.packet--pass{fill:#9fb4cf;opacity:.85}
 .node rect{fill:var(--surface-2);stroke:var(--border-2);stroke-width:1.4}
 .node__t{fill:var(--text);font-family:var(--display);font-size:15px;font-weight:600;text-anchor:middle}
 .node__t--sm{font-size:13px;text-anchor:start}

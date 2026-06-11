@@ -45,7 +45,7 @@
       </nav>
 
       <div class="nav__cta">
-        <a class="btn btn--ghost btn--sm" href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn--ghost btn--sm" href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">GitHub</a>
         <a class="btn btn--primary btn--sm" href="#install">Começar</a>
       </div>
 
@@ -65,7 +65,7 @@
       <a href="#install">Instalar</a>
     </nav>
     <div class="mobile-menu__cta">
-      <a class="btn btn--ghost" href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn--ghost" href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">GitHub</a>
       <a class="btn btn--primary" href="#install">Começar</a>
     </div>
   </div>
@@ -185,10 +185,15 @@
             <use class="wire" href="#wireLocal" />
             <use class="wire wire--pass" href="#wirePass" />
 
-            <!-- packet animado (percorre o caminho local em loop) -->
+            <!-- packets animados: um pro caminho local, outro pro passthrough -->
             <circle class="packet" r="5" filter="url(#pktGlow)">
               <animateMotion dur="2.4s" repeatCount="indefinite" rotate="auto" calcMode="linear">
                 <mpath href="#wireLocal" />
+              </animateMotion>
+            </circle>
+            <circle class="packet packet--pass" r="5" filter="url(#pktGlow)">
+              <animateMotion dur="2.8s" begin="1.3s" repeatCount="indefinite" rotate="auto" calcMode="linear">
+                <mpath href="#wirePass" />
               </animateMotion>
             </circle>
 
@@ -352,7 +357,7 @@
         </figure>
 
         <div class="install__cta" data-reveal>
-          <a class="btn btn--primary" href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">
+          <a class="btn btn--primary" href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">
             Clonar no GitHub
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
           </a>
@@ -401,14 +406,14 @@
         <div class="footer__col">
           <h4>Começar</h4>
           <a href="#install">Instalar</a>
-          <a href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">devsplit.yaml</a>
+          <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">devsplit.yaml</a>
         </div>
         <div class="footer__col">
           <h4>Recursos</h4>
-          <a href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">Documentação</a>
-          <a href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">Releases</a>
-          <a href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">Issues</a>
+          <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">Documentação</a>
+          <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">Releases</a>
+          <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">Issues</a>
         </div>
       </nav>
     </div>
