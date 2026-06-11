@@ -4,7 +4,7 @@
 
   const ACCENT = '#34d399';
   const LABELS = ['GET', 'POST', '200', '/auth', 'PUT', '/transporte', '201', 'WS', '304', '/api', 'PATCH', 'DELETE', '/orders', '500', 'HEAD'];
-  const MAX = 80; // teto de partículas — segura a CPU
+  const MAX = 110; // teto de partículas — segura a CPU
 
   const canvas = document.createElement('canvas');
   canvas.setAttribute('aria-hidden', 'true');
@@ -48,7 +48,7 @@
       vy: 0.7 + Math.random() * 1.6,
       rot: (Math.random() - 0.5) * 0.25,
       vr: (Math.random() - 0.5) * 0.02,
-      alpha: 0.32 + Math.random() * 0.28,
+      alpha: 0.5 + Math.random() * 0.35,
       label: nextLabel(),
     });
   }
@@ -103,7 +103,7 @@
   function tick() {
     frame++;
     // chuva ambiente: cadência proporcional à largura da tela
-    const every = w > 1100 ? 16 : 26;
+    const every = w > 1100 ? 11 : 18;
     if (frame % every === 0) emitRain();
 
     ctx.clearRect(0, 0, w, h);
