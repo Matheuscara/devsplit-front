@@ -10,6 +10,29 @@ const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 12);
 onScroll();
 window.addEventListener('scroll', onScroll, { passive: true });
 
+// ───────────────── menu mobile (≤920px) ─────────────────
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+if (burger && mobileMenu) {
+  const setMenu = (open) => {
+    mobileMenu.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    mobileMenu.setAttribute('aria-hidden', String(!open));
+    document.documentElement.classList.toggle('menu-open', open);
+  };
+
+  burger.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
+  mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) setMenu(false);
+  });
+  // ao voltar pra desktop, garante o menu fechado
+  window.matchMedia('(min-width: 921px)').addEventListener('change', (e) => {
+    if (e.matches) setMenu(false);
+  });
+}
+
 // ───────────────── ano no footer ─────────────────
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -204,12 +227,16 @@ function initCursorTrail() {
   const MAX = 18;
   let mouse = null;           // posição ao vivo do cursor (ou null se saiu da janela)
   let rafId = null;
+  let hover = false;          // sobre algo clicável?
+  let grow = 0;               // 0..1, anima a transição dot↔anel
+  const HOVER_SEL = 'a, button, [role="button"], summary, label, .feature, .shot, .compare__card';
 
   function ensureLoop() { if (!rafId) loop(); }
 
   window.addEventListener('pointermove', (e) => {
     if (e.pointerType === 'touch') return;
     mouse = { x: e.clientX, y: e.clientY };
+    hover = !!(e.target.closest && e.target.closest(HOVER_SEL));
     ensureLoop();
   }, { passive: true });
 
@@ -248,16 +275,30 @@ function initCursorTrail() {
       }
     }
 
+    // anima a transição entre bolinha (livre) e anel (sobre clicável)
+    grow += ((hover && mouse ? 1 : 0) - grow) * 0.2;
+
     // a bolinha-cursor: SEMPRE na posição ao vivo do mouse (zero offset/atraso)
     if (mouse) {
       ctx.shadowColor = 'rgba(52,211,153,.9)';
       ctx.shadowBlur = 16;
+
+      // halo / anel — cresce quando passa sobre algo clicável (affordance de clique)
+      const ringR = 5 + grow * 13;
       ctx.beginPath();
-      ctx.arc(mouse.x, mouse.y, 5, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(52,211,153,.28)';
-      ctx.fill();
+      ctx.arc(mouse.x, mouse.y, ringR, 0, Math.PI * 2);
+      if (grow > 0.04) {
+        ctx.lineWidth = 1.6;
+        ctx.strokeStyle = `rgba(52,211,153,${(0.35 + grow * 0.5).toFixed(3)})`;
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = 'rgba(52,211,153,.28)';
+        ctx.fill();
+      }
+
+      // ponto central (encolhe um pouco ao virar anel)
       ctx.beginPath();
-      ctx.arc(mouse.x, mouse.y, 3, 0, Math.PI * 2);
+      ctx.arc(mouse.x, mouse.y, 3 - grow * 1.4, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(198,255,230,.98)';
       ctx.fill();
     }

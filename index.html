@@ -10,8 +10,15 @@
   <meta property="og:title" content="devsplit — proxy de desenvolvimento que divide o tráfego do stage" />
   <meta property="og:description" content="Rode local só o serviço que você está mexendo. Todo o resto faz passthrough pro stage real. Sem Docker, sem mudar o front." />
   <meta property="og:image" content="assets/banner.png" />
+  <meta property="og:image:width" content="1600" />
+  <meta property="og:image:height" content="500" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="theme-color" content="#0b0c0e" />
+  <link rel="canonical" href="https://devsplit.dev/" />
 
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/logo.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,11 +45,30 @@
       </nav>
 
       <div class="nav__cta">
-        <a class="btn btn--ghost btn--sm" href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn--ghost btn--sm" href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">GitHub</a>
         <a class="btn btn--primary btn--sm" href="#install">Começar</a>
       </div>
+
+      <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
+
+  <!-- menu mobile (≤920px) -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav class="mobile-menu__links" aria-label="Navegação mobile">
+      <a href="#comparativo">Por quê</a>
+      <a href="#fluxo">Como funciona</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#telas">Telas</a>
+      <a href="#install">Instalar</a>
+    </nav>
+    <div class="mobile-menu__cta">
+      <a class="btn btn--ghost" href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn--primary" href="#install">Começar</a>
+    </div>
+  </div>
 
   <main id="top">
 
@@ -88,7 +114,7 @@
           <span class="window__title">devsplit — interceptando api.stage.acme.dev</span>
         </div>
         <div class="window__body">
-          <img src="assets/shot-rotas.png" alt="Tela de Rotas do devsplit: domínio api.stage.acme.dev interceptado, tabela de rotas marcando /transporte e /auth como local e /* como passthrough." loading="eager" />
+          <img src="assets/shot-rotas.png" alt="Tela de Rotas do devsplit: domínio api.stage.acme.dev interceptado, tabela de rotas marcando /transporte e /auth como local e /* como passthrough." width="1500" height="950" loading="eager" />
         </div>
       </figure>
     </section>
@@ -290,17 +316,17 @@
 
         <div class="shots">
           <figure class="shot shot--big" data-reveal>
-            <div class="shot__frame"><img src="assets/shot-trafego.png" alt="Inspector de tráfego do devsplit: latência P50/P95 por rota e log de requests com método, host, decisão e status." loading="lazy" /></div>
+            <div class="shot__frame"><img src="assets/shot-trafego.png" alt="Inspector de tráfego do devsplit: latência P50/P95 por rota e log de requests com método, host, decisão e status." width="1500" height="950" loading="lazy" /></div>
             <figcaption><strong>Tráfego</strong> — cada request com decisão, status e latência por rota.</figcaption>
           </figure>
 
           <figure class="shot" data-reveal>
-            <div class="shot__frame"><img src="assets/shot-rotas.png" alt="Tela de Rotas do devsplit com tabela de prefixos local e passthrough." loading="lazy" /></div>
+            <div class="shot__frame"><img src="assets/shot-rotas.png" alt="Tela de Rotas do devsplit com tabela de prefixos local e passthrough." width="1500" height="950" loading="lazy" /></div>
             <figcaption><strong>Rotas</strong> — ligue o split por prefixo, com checagem de saúde.</figcaption>
           </figure>
 
           <figure class="shot" data-reveal>
-            <div class="shot__frame"><img src="assets/shot-certificado.png" alt="Tela de Certificado do devsplit mostrando a CA mkcert instalada e confiável." loading="lazy" /></div>
+            <div class="shot__frame"><img src="assets/shot-certificado.png" alt="Tela de Certificado do devsplit mostrando a CA mkcert instalada e confiável." width="1500" height="950" loading="lazy" /></div>
             <figcaption><strong>Certificado</strong> — CA <span class="mono-inline">mkcert</span> que torna o HTTPS confiável.</figcaption>
           </figure>
         </div>
@@ -326,7 +352,7 @@
         </figure>
 
         <div class="install__cta" data-reveal>
-          <a class="btn btn--primary" href="https://github.com" target="_blank" rel="noopener">
+          <a class="btn btn--primary" href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">
             Clonar no GitHub
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
           </a>
@@ -375,14 +401,14 @@
         <div class="footer__col">
           <h4>Começar</h4>
           <a href="#install">Instalar</a>
-          <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://github.com" target="_blank" rel="noopener">devsplit.yaml</a>
+          <a href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">devsplit.yaml</a>
         </div>
         <div class="footer__col">
           <h4>Recursos</h4>
-          <a href="https://github.com" target="_blank" rel="noopener">Documentação</a>
-          <a href="https://github.com" target="_blank" rel="noopener">Releases</a>
-          <a href="https://github.com" target="_blank" rel="noopener">Issues</a>
+          <a href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">Documentação</a>
+          <a href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">Releases</a>
+          <a href="https://github.com/Matheuscara/devsplit-front" target="_blank" rel="noopener">Issues</a>
         </div>
       </nav>
     </div>
