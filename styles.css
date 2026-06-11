@@ -22,9 +22,29 @@ code{font-family:var(--mono);font-size:.92em}
 img{max-width:100%;display:block}
 ::selection{background:var(--accent);color:var(--accent-ink)}
 
-/* ============ fundo do hero: shader GrainGradient (paper-design, igual kodeck) ============ */
-.hero-bg{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-.hero-bg canvas{ display:block; }
+/* ============ fundo do hero: gradiente animado em CSS (leve, sem WebGL) ============ */
+.hero-bg{
+  position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+  background:
+    radial-gradient(60% 80% at 18% 8%, rgba(52,211,153,.20), transparent 60%),
+    radial-gradient(55% 70% at 82% 0%, rgba(122,243,192,.14), transparent 55%),
+    radial-gradient(80% 90% at 50% -12%, rgba(14,92,67,.30), transparent 65%),
+    var(--bg);
+}
+/* manchas que derivam devagar — um só elemento, composto na GPU */
+.hero-bg::before{
+  content:""; position:absolute; inset:-25%;
+  background:
+    radial-gradient(38% 46% at 32% 30%, rgba(52,211,153,.16), transparent 62%),
+    radial-gradient(42% 52% at 70% 58%, rgba(34,192,138,.12), transparent 62%);
+  filter:blur(44px);
+  animation:heroDrift 22s ease-in-out infinite alternate;
+  will-change:transform;
+}
+@keyframes heroDrift{
+  from{transform:translate3d(-3%,-2%,0) scale(1)}
+  to{transform:translate3d(4%,3%,0) scale(1.08)}
+}
 /* overlay p/ legibilidade: escurece o topo (onde fica o texto) e suaviza a base */
 .hero-fade{ position:absolute; inset:0; z-index:1; pointer-events:none;
   background:linear-gradient(180deg, var(--bg) 0%, rgba(11,12,14,.5) 24%, transparent 54%, transparent 80%, rgba(11,12,14,.3) 100%); }
