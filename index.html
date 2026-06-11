@@ -41,6 +41,7 @@
         <a href="#fluxo">Como funciona</a>
         <a href="#recursos">Recursos</a>
         <a href="#telas">Telas</a>
+        <a href="#seguranca">Segurança</a>
         <a href="#install">Instalar</a>
       </nav>
 
@@ -62,7 +63,8 @@
       <a href="#fluxo">Como funciona</a>
       <a href="#recursos">Recursos</a>
       <a href="#telas">Telas</a>
-      <a href="#install">Instalar</a>
+      <a href="#seguranca">Segurança</a>
+        <a href="#install">Instalar</a>
     </nav>
     <div class="mobile-menu__cta">
       <a class="btn btn--ghost" href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">GitHub</a>
@@ -338,6 +340,81 @@
       </div>
     </section>
 
+    <!-- ╭──────────────────────────────── SEGURANÇA & CONFIANÇA ────────────────────────────────╮ -->
+    <section class="section" id="seguranca">
+      <div class="wrap">
+        <header class="head head--center" data-reveal>
+          <span class="eyebrow">// segurança</span>
+          <h2 class="head__title">Seguro por desenho, não por promessa.</h2>
+          <p class="head__lead">O devsplit roda na sua máquina e fala só com o <em>seu</em> stage.
+            Nada de tráfego passando por servidores de terceiros.</p>
+        </header>
+
+        <div class="security">
+          <!-- pontos reais de confiança do produto -->
+          <ul class="trust" data-reveal>
+            <li class="trust__item">
+              <span class="trust__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>
+              </span>
+              <div><h3>Open source e auditável</h3><p>Código aberto — dá pra ler cada linha do proxy antes de confiar nele.</p></div>
+            </li>
+            <li class="trust__item">
+              <span class="trust__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7l8-4z"/><circle cx="12" cy="11" r="2"/><path d="M12 13v3"/></svg>
+              </span>
+              <div><h3>CA local, chaves na sua máquina</h3><p>O <span class="mono-inline">mkcert</span> gera e guarda a raiz localmente. Nenhuma chave sai do seu computador.</p></div>
+            </li>
+            <li class="trust__item">
+              <span class="trust__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M6 8.5V14a4 4 0 0 0 4 4h6"/></svg>
+              </span>
+              <div><h3>Tráfego só pro seu stage</h3><p>O <span class="mono-inline">passthrough</span> vai direto pro seu gateway real — nada trafega por servidores nossos.</p></div>
+            </li>
+            <li class="trust__item">
+              <span class="trust__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              </span>
+              <div><h3>TLS real, sem atalhos</h3><p>Certificado válido pro domínio interceptado. Em momento nenhum a verificação de TLS é desligada.</p></div>
+            </li>
+          </ul>
+
+          <!-- card de scan (DEMONSTRAÇÃO — dados ilustrativos, não é um scan real) -->
+          <figure class="window window--scan" data-reveal>
+            <div class="window__bar">
+              <span class="window__dots" aria-hidden="true"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+              <span class="window__title">security-scan.yml</span>
+              <span class="window__tag">exemplo</span>
+            </div>
+            <div class="scan">
+              <div class="scan__cmd"><span class="t-prompt">$</span> run security pipeline</div>
+              <div class="scan__row">
+                <span class="scan__check">✓</span>
+                <span class="scan__tool">CodeQL <i>· JavaScript</i></span>
+                <span class="scan__res">0 alertas</span>
+              </div>
+              <div class="scan__row">
+                <span class="scan__check">✓</span>
+                <span class="scan__tool">Trivy <i>· deps + config</i></span>
+                <span class="scan__res">0 high / 0 critical</span>
+              </div>
+              <div class="scan__row">
+                <span class="scan__check">✓</span>
+                <span class="scan__tool">gitleaks <i>· secret scan</i></span>
+                <span class="scan__res">0 segredos</span>
+              </div>
+              <div class="scan__row">
+                <span class="scan__check">✓</span>
+                <span class="scan__tool">Dependabot <i>· dependências</i></span>
+                <span class="scan__res">em dia</span>
+              </div>
+            </div>
+            <figcaption class="scan__note">Exemplo ilustrativo de um pipeline de varredura — não é um relatório real. Configure CodeQL, Trivy e gitleaks no seu CI para resultados de verdade.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <!-- ╭──────────────────────────────────── TERMINAL ────────────────────────────────────╮ -->
     <section class="section section--install" id="install">
       <div class="wrap wrap--narrow">
@@ -402,6 +479,7 @@
           <a href="#fluxo">Como funciona</a>
           <a href="#recursos">Recursos</a>
           <a href="#telas">Telas</a>
+          <a href="#seguranca">Segurança</a>
         </div>
         <div class="footer__col">
           <h4>Começar</h4>

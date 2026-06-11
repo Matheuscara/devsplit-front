@@ -387,6 +387,51 @@ html.menu-open{overflow:hidden}
 .shot figcaption{padding:14px 6px 4px;color:var(--muted);font-size:.92rem}
 .shot figcaption strong{color:var(--text);font-weight:600;font-family:var(--display)}
 
+/* ════════════════════════════ SEGURANÇA ════════════════════════════ */
+.security{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+
+.trust{display:flex;flex-direction:column;gap:8px}
+.trust__item{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:18px;border-radius:var(--r);
+  border:1px solid transparent;
+  transition:border-color .35s var(--ease),background .35s var(--ease);
+}
+.trust__item:hover{border-color:var(--border);background:var(--surface)}
+.trust__icon{
+  flex-shrink:0;display:grid;place-items:center;width:42px;height:42px;border-radius:11px;
+  background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.22);color:var(--accent);
+}
+.trust__icon svg{width:21px;height:21px}
+.trust__item h3{font-family:var(--display);font-size:1.06rem;font-weight:600;letter-spacing:-.01em;margin-bottom:3px}
+.trust__item p{font-size:.92rem;color:var(--muted)}
+
+/* card de scan (demonstração) */
+.window--scan{align-self:stretch}
+.window__tag{
+  margin-left:auto;font-family:var(--mono);font-size:.66rem;letter-spacing:.05em;
+  text-transform:uppercase;padding:3px 9px;border-radius:999px;
+  background:rgba(254,188,46,.14);color:#f1c453;border:1px solid rgba(254,188,46,.32);
+}
+.scan{padding:20px 20px 8px;background:#0a0b0d;font-family:var(--mono)}
+.scan__cmd{font-size:.85rem;color:var(--muted);margin-bottom:14px}
+.scan__cmd .t-prompt{color:var(--accent);font-weight:600;margin-right:8px}
+.scan__row{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;
+  padding:11px 0;border-top:1px solid var(--border);font-size:.86rem;
+}
+.scan__check{
+  width:20px;height:20px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(52,211,153,.16);color:var(--accent);font-weight:700;font-size:.72rem;
+}
+.scan__tool{color:var(--text)}
+.scan__tool i{color:var(--muted-2);font-style:normal}
+.scan__res{color:var(--accent);font-size:.8rem}
+.scan__note{
+  padding:14px 20px 18px;font-family:var(--mono);font-size:.72rem;line-height:1.55;
+  color:var(--muted-2);border-top:1px solid var(--border);background:var(--surface);
+}
+
 /* ════════════════════════════ TERMINAL ════════════════════════════ */
 .section--install{padding-top:96px}
 .window--term{max-width:760px;margin-inline:auto}
@@ -515,6 +560,7 @@ html.fx-cursor-hidden *{cursor:none !important}
   .nav__burger{display:flex}
   .compare{grid-template-columns:1fr;gap:18px}
   .compare__arrow{transform:rotate(90deg)}
+  .security{grid-template-columns:1fr;gap:20px}
   .features{grid-template-columns:repeat(2,1fr)}
   .footer__inner{grid-template-columns:1fr;gap:36px}
 }
