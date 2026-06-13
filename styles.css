@@ -406,7 +406,7 @@ html.menu-open{overflow:hidden}
 .trust__item h3{font-family:var(--display);font-size:1.06rem;font-weight:600;letter-spacing:-.01em;margin-bottom:3px}
 .trust__item p{font-size:.92rem;color:var(--muted)}
 
-/* card de scan (demonstração) */
+/* card de scan (resultado real do CI) */
 .window--scan{align-self:stretch}
 .window__tag{
   margin-left:auto;font-family:var(--mono);font-size:.66rem;letter-spacing:.05em;
@@ -427,10 +427,14 @@ html.menu-open{overflow:hidden}
 .scan__tool{color:var(--text)}
 .scan__tool i{color:var(--muted-2);font-style:normal}
 .scan__res{color:var(--accent);font-size:.8rem}
+.scan__check--warn{background:rgba(245,191,79,.16);color:#f5bf4f}
+.scan__res--warn{color:#f5bf4f}
 .scan__note{
   padding:14px 20px 18px;font-family:var(--mono);font-size:.72rem;line-height:1.55;
   color:var(--muted-2);border-top:1px solid var(--border);background:var(--surface);
 }
+.scan__note a{color:var(--accent)}
+.scan__note a:hover{text-decoration:underline}
 
 /* ════════════════════════════ TERMINAL ════════════════════════════ */
 .section--install{padding-top:96px}

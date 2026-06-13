@@ -379,37 +379,42 @@
             </li>
           </ul>
 
-          <!-- card de scan (DEMONSTRAÇÃO — dados ilustrativos, não é um scan real) -->
+          <!-- card de scan: resultado REAL do CI (ver docs/security-scan.md) -->
           <figure class="window window--scan" data-reveal>
             <div class="window__bar">
               <span class="window__dots" aria-hidden="true"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
               <span class="window__title">security-scan.yml</span>
-              <span class="window__tag">exemplo</span>
+              <span class="window__tag">scan · 11 jun</span>
             </div>
             <div class="scan">
-              <div class="scan__cmd"><span class="t-prompt">$</span> run security pipeline</div>
+              <div class="scan__cmd"><span class="t-prompt">$</span> run security pipeline · 5 scanners</div>
               <div class="scan__row">
                 <span class="scan__check">✓</span>
-                <span class="scan__tool">CodeQL <i>· JavaScript</i></span>
-                <span class="scan__res">0 alertas</span>
-              </div>
-              <div class="scan__row">
-                <span class="scan__check">✓</span>
-                <span class="scan__tool">Trivy <i>· deps + config</i></span>
-                <span class="scan__res">0 high / 0 critical</span>
-              </div>
-              <div class="scan__row">
-                <span class="scan__check">✓</span>
-                <span class="scan__tool">gitleaks <i>· secret scan</i></span>
+                <span class="scan__tool">gitleaks <i>· histórico + árvore</i></span>
                 <span class="scan__res">0 segredos</span>
               </div>
               <div class="scan__row">
                 <span class="scan__check">✓</span>
-                <span class="scan__tool">Dependabot <i>· dependências</i></span>
-                <span class="scan__res">em dia</span>
+                <span class="scan__tool">CodeQL <i>· TS + Rust</i></span>
+                <span class="scan__res">0 alertas</span>
+              </div>
+              <div class="scan__row">
+                <span class="scan__check">✓</span>
+                <span class="scan__tool">cargo-audit <i>· RustSec</i></span>
+                <span class="scan__res">0 vulnerabilidades</span>
+              </div>
+              <div class="scan__row">
+                <span class="scan__check">✓</span>
+                <span class="scan__tool">npm audit <i>· 154 deps</i></span>
+                <span class="scan__res">0 vulnerabilidades</span>
+              </div>
+              <div class="scan__row">
+                <span class="scan__check scan__check--warn">!</span>
+                <span class="scan__tool">Trivy <i>· deps + config</i></span>
+                <span class="scan__res scan__res--warn">1 média · glib</span>
               </div>
             </div>
-            <figcaption class="scan__note">Exemplo ilustrativo de um pipeline de varredura — não é um relatório real. Configure CodeQL, Trivy e gitleaks no seu CI para resultados de verdade.</figcaption>
+            <figcaption class="scan__note">Resultado real do CI, a cada push. O DoS do hickory-proto foi corrigido (hickory 0.26); a única pendência (glib, <i>unsound</i>) é transitiva da stack GTK do Tauri — não é código do devsplit. <a href="https://github.com/Matheuscara/devsplit/blob/main/docs/security-scan.md" target="_blank" rel="noopener">Relatório completo →</a></figcaption>
           </figure>
         </div>
       </div>
