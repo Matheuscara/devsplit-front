@@ -122,7 +122,21 @@ ul{list-style:none}
 }
 .nav__links a:hover{color:var(--text)}
 .nav__links a:hover::after{transform:scaleX(1)}
-.nav__cta{display:flex;gap:10px}
+.nav__cta{display:flex;gap:10px;align-items:center}
+
+/* seletor de idioma PT | EN */
+.lang-switch{
+  display:inline-flex;border:1px solid var(--border-2);border-radius:9px;
+  overflow:hidden;background:rgba(21,23,26,.6);
+}
+.lang-switch__opt{
+  font-family:var(--mono);font-size:.8rem;font-weight:600;letter-spacing:.02em;
+  padding:8px 11px;background:transparent;color:var(--muted);border:0;cursor:pointer;
+  transition:color .2s var(--ease),background .2s var(--ease);
+}
+.lang-switch__opt:hover{color:var(--text)}
+.lang-switch__opt.is-active{background:var(--accent);color:var(--accent-ink)}
+.mobile-menu__cta .lang-switch{align-self:center}
 
 /* hambúrguer (≤920px) */
 .nav__burger{

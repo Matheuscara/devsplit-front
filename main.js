@@ -2,6 +2,8 @@
 // devsplit · landing · main.js (vanilla, sem build)
 // ════════════════════════════════════════════════════════════════════════
 
+import { t } from './i18n.js';
+
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ───────────────────────── nav: estado ao rolar ─────────────────────────
@@ -85,12 +87,12 @@ if (reduceMotion) {
 }
 
 // ───────────────── terminal: efeito de digitação ─────────────────
-const TERM_LINES = [
+const termLines = () => [
   { type: 'cmd', text: 'cp examples/devsplit.yaml devsplit.yaml' },
   { type: 'cmd', text: 'cd app && npm install && npm run build' },
   { type: 'cmd', text: 'cd src-tauri && cargo run' },
-  { type: 'comment', text: '# 1 prompt de senha (Linux): hosts + :443' },
-  { type: 'ok', text: '✓ devsplit rodando — interceptando api.stage.acme.dev' },
+  { type: 'comment', text: t('term.comment') },
+  { type: 'ok', text: t('term.ok') },
 ];
 
 const termOut = document.getElementById('termOut');
@@ -98,7 +100,7 @@ const caret = document.getElementById('caret');
 
 function renderTermInstant() {
   if (!termOut) return;
-  termOut.innerHTML = TERM_LINES.map((l) => {
+  termOut.innerHTML = termLines().map((l) => {
     if (l.type === 'cmd') return `<span class="t-prompt">$ </span><span class="t-cmd">${escape(l.text)}</span>`;
     if (l.type === 'comment') return `<span class="t-comment">${escape(l.text)}</span>`;
     return `<span class="t-ok">${escape(l.text)}</span>`;
@@ -114,8 +116,9 @@ async function typeTerminal() {
   if (!termOut) return;
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-  for (let i = 0; i < TERM_LINES.length; i++) {
-    const line = TERM_LINES[i];
+  const lines = termLines();
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     const prefix = line.type === 'cmd' ? '<span class="t-prompt">$ </span>' : '';
     const cls = line.type === 'cmd' ? 't-cmd' : line.type === 'comment' ? 't-comment' : 't-ok';
 
@@ -129,7 +132,7 @@ async function typeTerminal() {
       await sleep(line.type === 'ok' ? 14 : 26);
     }
     termOut.innerHTML = done + prefix + `<span class="${cls}">${escape(line.text)}</span>` +
-      (i < TERM_LINES.length - 1 ? '\n' : '');
+      (i < lines.length - 1 ? '\n' : '');
     await sleep(line.type === 'comment' ? 260 : 380);
   }
 }
@@ -154,6 +157,11 @@ if (termOut) {
     termIO.observe(document.getElementById('term'));
   }
 }
+
+// re-render o terminal quando o idioma muda (já digitado → troca instantânea)
+window.addEventListener('i18n:change', () => {
+  if (termOut && termOut.textContent.length) renderTermInstant();
+});
 
 // ───────────────── shader GrainGradient (hero) ─────────────────
 // onda de grão verde, via @paper-design/shaders-react (esm.sh) — mesma técnica do kodeck.dev.

@@ -31,26 +31,30 @@
   <!-- ╭──────────────────────────────────────── NAV ────────────────────────────────────────╮ -->
   <header class="nav" id="nav">
     <div class="nav__inner">
-      <a class="brand" href="#top" aria-label="devsplit — início">
+      <a class="brand" href="#top" data-i18n-attrs="aria-label:nav.brandAria" aria-label="devsplit — início">
         <img class="brand__mark" src="assets/logo.svg" alt="" width="28" height="28" />
         <span class="brand__name">devsplit</span>
       </a>
 
-      <nav class="nav__links" aria-label="Navegação principal">
-        <a href="#comparativo">Por quê</a>
-        <a href="#fluxo">Como funciona</a>
-        <a href="#recursos">Recursos</a>
-        <a href="#telas">Telas</a>
-        <a href="#seguranca">Segurança</a>
-        <a href="#install">Instalar</a>
+      <nav class="nav__links" data-i18n-attrs="aria-label:nav.linksAria" aria-label="Navegação principal">
+        <a href="#comparativo" data-i18n="nav.why">Por quê</a>
+        <a href="#fluxo" data-i18n="nav.how">Como funciona</a>
+        <a href="#recursos" data-i18n="nav.features">Recursos</a>
+        <a href="#telas" data-i18n="nav.screens">Telas</a>
+        <a href="#seguranca" data-i18n="nav.security">Segurança</a>
+        <a href="#install" data-i18n="nav.install">Instalar</a>
       </nav>
 
       <div class="nav__cta">
+        <div class="lang-switch" role="group" data-i18n-attrs="aria-label:nav.langAria" aria-label="Idioma / Language">
+          <button type="button" class="lang-switch__opt" data-lang="pt">PT</button>
+          <button type="button" class="lang-switch__opt" data-lang="en">EN</button>
+        </div>
         <a class="btn btn--ghost btn--sm" href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn btn--primary btn--sm" href="#install">Começar</a>
+        <a class="btn btn--primary btn--sm" href="#install" data-i18n="nav.start">Começar</a>
       </div>
 
-      <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
+      <button class="nav__burger" id="burger" data-i18n-attrs="aria-label:nav.burgerAria" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -58,17 +62,21 @@
 
   <!-- menu mobile (≤920px) -->
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <nav class="mobile-menu__links" aria-label="Navegação mobile">
-      <a href="#comparativo">Por quê</a>
-      <a href="#fluxo">Como funciona</a>
-      <a href="#recursos">Recursos</a>
-      <a href="#telas">Telas</a>
-      <a href="#seguranca">Segurança</a>
-        <a href="#install">Instalar</a>
+    <nav class="mobile-menu__links" data-i18n-attrs="aria-label:nav.mobileAria" aria-label="Navegação mobile">
+      <a href="#comparativo" data-i18n="nav.why">Por quê</a>
+      <a href="#fluxo" data-i18n="nav.how">Como funciona</a>
+      <a href="#recursos" data-i18n="nav.features">Recursos</a>
+      <a href="#telas" data-i18n="nav.screens">Telas</a>
+      <a href="#seguranca" data-i18n="nav.security">Segurança</a>
+        <a href="#install" data-i18n="nav.install">Instalar</a>
     </nav>
     <div class="mobile-menu__cta">
+      <div class="lang-switch" role="group" data-i18n-attrs="aria-label:nav.langAria" aria-label="Idioma / Language">
+        <button type="button" class="lang-switch__opt" data-lang="pt">PT</button>
+        <button type="button" class="lang-switch__opt" data-lang="en">EN</button>
+      </div>
       <a class="btn btn--ghost" href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">GitHub</a>
-      <a class="btn btn--primary" href="#install">Começar</a>
+      <a class="btn btn--primary" href="#install" data-i18n="nav.start">Começar</a>
     </div>
   </div>
 
@@ -88,11 +96,11 @@
           <code>cp examples/devsplit.yaml devsplit.yaml</code>
         </span>
 
-        <h1 class="hero__title" data-reveal>
+        <h1 class="hero__title" data-reveal data-i18n="hero.title">
           Rode local só o serviço<br />que você <span class="accent">está mexendo</span>.
         </h1>
 
-        <p class="hero__sub" data-reveal>
+        <p class="hero__sub" data-reveal data-i18n="hero.sub">
           O <strong>devsplit</strong> divide o tráfego do gateway de stage. O serviço em que você
           trabalha cai na sua máquina; todo o resto faz <span class="mono-inline">passthrough</span>
           pro ambiente real. Sem Docker, sem subir a stack inteira, sem mexer no front.
@@ -100,10 +108,10 @@
 
         <div class="hero__actions" data-reveal>
           <a class="btn btn--primary" href="#install">
-            Instalar o devsplit
+            <span data-i18n="hero.ctaInstall">Instalar o devsplit</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
           </a>
-          <a class="btn btn--ghost" href="#fluxo">Ver como funciona</a>
+          <a class="btn btn--ghost" href="#fluxo" data-i18n="hero.ctaHow">Ver como funciona</a>
         </div>
       </div>
 
@@ -113,10 +121,10 @@
           <span class="window__dots" aria-hidden="true">
             <i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i>
           </span>
-          <span class="window__title">devsplit — interceptando api.stage.acme.dev</span>
+          <span class="window__title" data-i18n="hero.winTitle">devsplit — interceptando api.stage.acme.dev</span>
         </div>
         <div class="window__body">
-          <img src="assets/shot-rotas.png" alt="Tela de Rotas do devsplit: domínio api.stage.acme.dev interceptado, tabela de rotas marcando /transporte e /auth como local e /* como passthrough." width="1500" height="950" loading="eager" />
+          <img src="assets/shot-rotas.png" data-i18n-attrs="alt:hero.imgAlt" alt="Tela de Rotas do devsplit: domínio api.stage.acme.dev interceptado, tabela de rotas marcando /transporte e /auth como local e /* como passthrough." width="1500" height="950" loading="eager" />
         </div>
       </figure>
     </section>
@@ -125,20 +133,20 @@
     <section class="section" id="comparativo">
       <div class="wrap">
         <header class="head" data-reveal>
-          <span class="eyebrow">// o problema</span>
-          <h2 class="head__title">Você só mudou um serviço.<br />Por que subir a stack inteira?</h2>
+          <span class="eyebrow" data-i18n="cmp.eyebrow">// o problema</span>
+          <h2 class="head__title" data-i18n="cmp.title">Você só mudou um serviço.<br />Por que subir a stack inteira?</h2>
         </header>
 
         <div class="compare">
           <article class="compare__card compare__card--bad" data-reveal>
-            <span class="compare__tag">antes</span>
-            <h3>Tudo local, na marra</h3>
-            <p>Pra mexer numa coisa, você levanta o mundo — e ainda assim algo quebra.</p>
+            <span class="compare__tag" data-i18n="cmp.badTag">antes</span>
+            <h3 data-i18n="cmp.badTitle">Tudo local, na marra</h3>
+            <p data-i18n="cmp.badLead">Pra mexer numa coisa, você levanta o mundo — e ainda assim algo quebra.</p>
             <ul class="checklist checklist--bad">
-              <li>Docker Compose com 12 serviços comendo a RAM</li>
-              <li>Banco, fila e auth de mentira pra "simular" o stage</li>
-              <li>Variáveis de ambiente desencontradas do real</li>
-              <li>20 minutos de boot antes da primeira request</li>
+              <li data-i18n="cmp.bad1">Docker Compose com 12 serviços comendo a RAM</li>
+              <li data-i18n="cmp.bad2">Banco, fila e auth de mentira pra "simular" o stage</li>
+              <li data-i18n="cmp.bad3">Variáveis de ambiente desencontradas do real</li>
+              <li data-i18n="cmp.bad4">20 minutos de boot antes da primeira request</li>
             </ul>
           </article>
 
@@ -147,14 +155,14 @@
           </div>
 
           <article class="compare__card compare__card--good" data-reveal>
-            <span class="compare__tag compare__tag--good">com devsplit</span>
-            <h3>Local só onde importa</h3>
-            <p>Roda na sua máquina o serviço do PR. O resto é o stage de verdade.</p>
+            <span class="compare__tag compare__tag--good" data-i18n="cmp.goodTag">com devsplit</span>
+            <h3 data-i18n="cmp.goodTitle">Local só onde importa</h3>
+            <p data-i18n="cmp.goodLead">Roda na sua máquina o serviço do PR. O resto é o stage de verdade.</p>
             <ul class="checklist checklist--good">
-              <li>Um processo: o serviço que você está editando</li>
-              <li><span class="mono-inline">passthrough</span> pro stage real em tudo mais</li>
-              <li>Mesmo gateway, mesmo HTTPS, mesmos dados</li>
-              <li>Primeira request em segundos, não em minutos</li>
+              <li data-i18n="cmp.good1">Um processo: o serviço que você está editando</li>
+              <li data-i18n="cmp.good2"><span class="mono-inline">passthrough</span> pro stage real em tudo mais</li>
+              <li data-i18n="cmp.good3">Mesmo gateway, mesmo HTTPS, mesmos dados</li>
+              <li data-i18n="cmp.good4">Primeira request em segundos, não em minutos</li>
             </ul>
           </article>
         </div>
@@ -165,13 +173,13 @@
     <section class="section section--flow" id="fluxo">
       <div class="wrap">
         <header class="head" data-reveal>
-          <span class="eyebrow">// como funciona</span>
-          <h2 class="head__title">Uma request entra. O devsplit decide o caminho.</h2>
-          <p class="head__lead">Por prefixo de rota: o que casa com um serviço local cai na sua máquina;
+          <span class="eyebrow" data-i18n="flow.eyebrow">// como funciona</span>
+          <h2 class="head__title" data-i18n="flow.title">Uma request entra. O devsplit decide o caminho.</h2>
+          <p class="head__lead" data-i18n="flow.lead">Por prefixo de rota: o que casa com um serviço local cai na sua máquina;
             o resto segue <span class="mono-inline">passthrough</span> pro gateway de stage — mesmo host, mesmo TLS.</p>
         </header>
 
-        <figure class="flow" data-reveal aria-label="Diagrama: request chega no devsplit e é dividida entre serviço local e passthrough para o stage real.">
+        <figure class="flow" data-reveal data-i18n-attrs="aria-label:flow.figAria" aria-label="Diagrama: request chega no devsplit e é dividida entre serviço local e passthrough para o stage real.">
           <svg class="flow__svg" viewBox="0 0 1000 360" role="img" preserveAspectRatio="xMidYMid meet">
             <defs>
               <path id="wireLocal"  d="M304 180 C 420 180, 460 88, 560 88"  fill="none" />
@@ -202,7 +210,7 @@
             <!-- nó: REQUEST -->
             <g class="node" transform="translate(48,156)">
               <rect width="88" height="48" rx="10" />
-              <text x="44" y="29" class="node__t">Request</text>
+              <text x="44" y="29" class="node__t" data-i18n="flow.nodeRequest">Request</text>
             </g>
 
             <!-- nó: DEVSPLIT (centro) -->
@@ -216,7 +224,7 @@
             <g class="node node--local" transform="translate(560,60)">
               <rect width="220" height="56" rx="12" />
               <circle cx="26" cy="28" r="6" class="node__led node__led--on" />
-              <text x="46" y="24" class="node__t node__t--sm">serviço LOCAL</text>
+              <text x="46" y="24" class="node__t node__t--sm" data-i18n="flow.nodeLocal">serviço LOCAL</text>
               <text x="46" y="42" class="node__sub">localhost:3000</text>
             </g>
 
@@ -224,14 +232,14 @@
             <g class="node node--stage" transform="translate(560,244)">
               <rect width="220" height="56" rx="12" />
               <circle cx="26" cy="28" r="6" class="node__led node__led--pass" />
-              <text x="46" y="24" class="node__t node__t--sm">passthrough → stage</text>
+              <text x="46" y="24" class="node__t node__t--sm" data-i18n="flow.nodeStage">passthrough → stage</text>
               <text x="46" y="42" class="node__sub">api.stage.acme.dev</text>
             </g>
           </svg>
 
           <figcaption class="flow__legend">
-            <span class="legend__item"><i class="legend__chip legend__chip--local"></i> local — cai na sua máquina</span>
-            <span class="legend__item"><i class="legend__chip legend__chip--pass"></i> passthrough — segue pro stage real</span>
+            <span class="legend__item" data-i18n="flow.legendLocal"><i class="legend__chip legend__chip--local"></i> local — cai na sua máquina</span>
+            <span class="legend__item" data-i18n="flow.legendPass"><i class="legend__chip legend__chip--pass"></i> passthrough — segue pro stage real</span>
           </figcaption>
         </figure>
       </div>
@@ -241,8 +249,8 @@
     <section class="section" id="recursos">
       <div class="wrap">
         <header class="head" data-reveal>
-          <span class="eyebrow">// recursos</span>
-          <h2 class="head__title">Devtool de verdade, não um mock.</h2>
+          <span class="eyebrow" data-i18n="feat.eyebrow">// recursos</span>
+          <h2 class="head__title" data-i18n="feat.title">Devtool de verdade, não um mock.</h2>
         </header>
 
         <div class="features">
@@ -250,64 +258,64 @@
             <span class="feature__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h6m6 0h6"/><circle cx="12" cy="12" r="3"/><path d="M12 3v6m0 6v6"/></svg>
             </span>
-            <h3>Split por prefixo</h3>
-            <p>Defina <span class="mono-inline">/auth</span> ou <span class="mono-inline">/transporte</span> como local; o curinga <span class="mono-inline">/*</span> faz passthrough. Liga e desliga rota por rota.</p>
+            <h3 data-i18n="feat.f1t">Split por prefixo</h3>
+            <p data-i18n="feat.f1p">Defina <span class="mono-inline">/auth</span> ou <span class="mono-inline">/transporte</span> como local; o curinga <span class="mono-inline">/*</span> faz passthrough. Liga e desliga rota por rota.</p>
           </article>
 
           <article class="feature" data-reveal>
             <span class="feature__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/><path d="M8 18v3m8-3v3M6 21h12"/></svg>
             </span>
-            <h3>Sem Docker</h3>
-            <p>Um app desktop (Tauri) + <span class="mono-inline">devsplit.yaml</span> + CLI. Nada de Compose, nada de stack inteira na sua RAM.</p>
+            <h3 data-i18n="feat.f2t">Sem Docker</h3>
+            <p data-i18n="feat.f2p">Um app desktop (Tauri) + <span class="mono-inline">devsplit.yaml</span> + CLI. Nada de Compose, nada de stack inteira na sua RAM.</p>
           </article>
 
           <article class="feature" data-reveal>
             <span class="feature__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7l8-4z"/><path d="m9 12 2 2 4-4"/></svg>
             </span>
-            <h3>HTTPS confiável</h3>
-            <p>CA local via <span class="mono-inline">mkcert</span> assina o domínio interceptado. O browser confia, o front nem percebe.</p>
+            <h3 data-i18n="feat.f3t">HTTPS confiável</h3>
+            <p data-i18n="feat.f3p">CA local via <span class="mono-inline">mkcert</span> assina o domínio interceptado. O browser confia, o front nem percebe.</p>
           </article>
 
           <article class="feature" data-reveal>
             <span class="feature__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
             </span>
-            <h3>Inspector de tráfego</h3>
-            <p>Veja cada request com host, método, decisão (local/passthrough), status e latência P50/P95 por rota.</p>
+            <h3 data-i18n="feat.f4t">Inspector de tráfego</h3>
+            <p data-i18n="feat.f4p">Veja cada request com host, método, decisão (local/passthrough), status e latência P50/P95 por rota.</p>
           </article>
 
           <article class="feature" data-reveal>
             <span class="feature__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
             </span>
-            <h3>Detecção de serviços</h3>
-            <p>O devsplit varre as portas locais e sugere rotas. Subiu o serviço? Ele aparece pronto pra ativar.</p>
+            <h3 data-i18n="feat.f5t">Detecção de serviços</h3>
+            <p data-i18n="feat.f5p">O devsplit varre as portas locais e sugere rotas. Subiu o serviço? Ele aparece pronto pra ativar.</p>
           </article>
 
           <article class="feature" data-reveal>
             <span class="feature__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6"/><path d="M12 19h8"/></svg>
             </span>
-            <h3>Perfis nomeados</h3>
-            <p>Salve combinações de rotas por contexto — <span class="mono-inline">transporte</span>, <span class="mono-inline">auth</span> — e troque com um clique.</p>
+            <h3 data-i18n="feat.f6t">Perfis nomeados</h3>
+            <p data-i18n="feat.f6p">Salve combinações de rotas por contexto — <span class="mono-inline">transporte</span>, <span class="mono-inline">auth</span> — e troque com um clique.</p>
           </article>
 
           <article class="feature" data-reveal>
             <span class="feature__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 8l7-5 7 5"/><path d="M5 16l7 5 7-5"/></svg>
             </span>
-            <h3>Saúde antes do split</h3>
-            <p>Checagem de CA, entrada no <span class="mono-inline">hosts</span>, porta livre e gateway alcançável — avisos antes de confiar no proxy.</p>
+            <h3 data-i18n="feat.f7t">Saúde antes do split</h3>
+            <p data-i18n="feat.f7p">Checagem de CA, entrada no <span class="mono-inline">hosts</span>, porta livre e gateway alcançável — avisos antes de confiar no proxy.</p>
           </article>
 
           <article class="feature" data-reveal>
             <span class="feature__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><path d="M16 4l4 4-4 4"/></svg>
             </span>
-            <h3>Front intacto</h3>
-            <p>O app aponta pro mesmo <span class="mono-inline">api.stage.acme.dev</span> de sempre. Zero mudança de código no cliente.</p>
+            <h3 data-i18n="feat.f8t">Front intacto</h3>
+            <p data-i18n="feat.f8p">O app aponta pro mesmo <span class="mono-inline">api.stage.acme.dev</span> de sempre. Zero mudança de código no cliente.</p>
           </article>
         </div>
       </div>
@@ -317,24 +325,24 @@
     <section class="section" id="telas">
       <div class="wrap">
         <header class="head" data-reveal>
-          <span class="eyebrow">// telas</span>
-          <h2 class="head__title">O painel inteiro, sem firula.</h2>
+          <span class="eyebrow" data-i18n="scr.eyebrow">// telas</span>
+          <h2 class="head__title" data-i18n="scr.title">O painel inteiro, sem firula.</h2>
         </header>
 
         <div class="shots">
           <figure class="shot shot--big" data-reveal>
-            <div class="shot__frame"><img src="assets/shot-trafego.png" alt="Inspector de tráfego do devsplit: latência P50/P95 por rota e log de requests com método, host, decisão e status." width="1500" height="950" loading="lazy" /></div>
-            <figcaption><strong>Tráfego</strong> — cada request com decisão, status e latência por rota.</figcaption>
+            <div class="shot__frame"><img src="assets/shot-trafego.png" data-i18n-attrs="alt:scr.trafAlt" alt="Inspector de tráfego do devsplit: latência P50/P95 por rota e log de requests com método, host, decisão e status." width="1500" height="950" loading="lazy" /></div>
+            <figcaption data-i18n="scr.trafCap"><strong>Tráfego</strong> — cada request com decisão, status e latência por rota.</figcaption>
           </figure>
 
           <figure class="shot" data-reveal>
-            <div class="shot__frame"><img src="assets/shot-rotas.png" alt="Tela de Rotas do devsplit com tabela de prefixos local e passthrough." width="1500" height="950" loading="lazy" /></div>
-            <figcaption><strong>Rotas</strong> — ligue o split por prefixo, com checagem de saúde.</figcaption>
+            <div class="shot__frame"><img src="assets/shot-rotas.png" data-i18n-attrs="alt:scr.rotasAlt" alt="Tela de Rotas do devsplit com tabela de prefixos local e passthrough." width="1500" height="950" loading="lazy" /></div>
+            <figcaption data-i18n="scr.rotasCap"><strong>Rotas</strong> — ligue o split por prefixo, com checagem de saúde.</figcaption>
           </figure>
 
           <figure class="shot" data-reveal>
-            <div class="shot__frame"><img src="assets/shot-certificado.png" alt="Tela de Certificado do devsplit mostrando a CA mkcert instalada e confiável." width="1500" height="950" loading="lazy" /></div>
-            <figcaption><strong>Certificado</strong> — CA <span class="mono-inline">mkcert</span> que torna o HTTPS confiável.</figcaption>
+            <div class="shot__frame"><img src="assets/shot-certificado.png" data-i18n-attrs="alt:scr.certAlt" alt="Tela de Certificado do devsplit mostrando a CA mkcert instalada e confiável." width="1500" height="950" loading="lazy" /></div>
+            <figcaption data-i18n="scr.certCap"><strong>Certificado</strong> — CA <span class="mono-inline">mkcert</span> que torna o HTTPS confiável.</figcaption>
           </figure>
         </div>
       </div>
@@ -344,9 +352,9 @@
     <section class="section" id="seguranca">
       <div class="wrap">
         <header class="head head--center" data-reveal>
-          <span class="eyebrow">// segurança</span>
-          <h2 class="head__title">Seguro por desenho, não por promessa.</h2>
-          <p class="head__lead">O devsplit roda na sua máquina e fala só com o <em>seu</em> stage.
+          <span class="eyebrow" data-i18n="sec.eyebrow">// segurança</span>
+          <h2 class="head__title" data-i18n="sec.title">Seguro por desenho, não por promessa.</h2>
+          <p class="head__lead" data-i18n="sec.lead">O devsplit roda na sua máquina e fala só com o <em>seu</em> stage.
             Nada de tráfego passando por servidores de terceiros.</p>
         </header>
 
@@ -357,25 +365,25 @@
               <span class="trust__icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>
               </span>
-              <div><h3>Open source e auditável</h3><p>Código aberto — dá pra ler cada linha do proxy antes de confiar nele.</p></div>
+              <div><h3 data-i18n="sec.t1t">Open source e auditável</h3><p data-i18n="sec.t1p">Código aberto — dá pra ler cada linha do proxy antes de confiar nele.</p></div>
             </li>
             <li class="trust__item">
               <span class="trust__icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7l8-4z"/><circle cx="12" cy="11" r="2"/><path d="M12 13v3"/></svg>
               </span>
-              <div><h3>CA local, chaves na sua máquina</h3><p>O <span class="mono-inline">mkcert</span> gera e guarda a raiz localmente. Nenhuma chave sai do seu computador.</p></div>
+              <div><h3 data-i18n="sec.t2t">CA local, chaves na sua máquina</h3><p data-i18n="sec.t2p">O <span class="mono-inline">mkcert</span> gera e guarda a raiz localmente. Nenhuma chave sai do seu computador.</p></div>
             </li>
             <li class="trust__item">
               <span class="trust__icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M6 8.5V14a4 4 0 0 0 4 4h6"/></svg>
               </span>
-              <div><h3>Tráfego só pro seu stage</h3><p>O <span class="mono-inline">passthrough</span> vai direto pro seu gateway real — nada trafega por servidores nossos.</p></div>
+              <div><h3 data-i18n="sec.t3t">Tráfego só pro seu stage</h3><p data-i18n="sec.t3p">O <span class="mono-inline">passthrough</span> vai direto pro seu gateway real — nada trafega por servidores nossos.</p></div>
             </li>
             <li class="trust__item">
               <span class="trust__icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
               </span>
-              <div><h3>TLS real, sem atalhos</h3><p>Certificado válido pro domínio interceptado. Em momento nenhum a verificação de TLS é desligada.</p></div>
+              <div><h3 data-i18n="sec.t4t">TLS real, sem atalhos</h3><p data-i18n="sec.t4p">Certificado válido pro domínio interceptado. Em momento nenhum a verificação de TLS é desligada.</p></div>
             </li>
           </ul>
 
@@ -384,37 +392,37 @@
             <div class="window__bar">
               <span class="window__dots" aria-hidden="true"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
               <span class="window__title">security-scan.yml</span>
-              <span class="window__tag">scan · 11 jun</span>
+              <span class="window__tag" data-i18n="sec.scanTag">scan · 11 jun</span>
             </div>
             <div class="scan">
-              <div class="scan__cmd"><span class="t-prompt">$</span> run security pipeline · 5 scanners</div>
+              <div class="scan__cmd"><span class="t-prompt">$</span> <span data-i18n="sec.scanCmd">run security pipeline · 5 scanners</span></div>
               <div class="scan__row">
                 <span class="scan__check">✓</span>
-                <span class="scan__tool">gitleaks <i>· histórico + árvore</i></span>
-                <span class="scan__res">0 segredos</span>
+                <span class="scan__tool" data-i18n="sec.scanTool1">gitleaks <i>· histórico + árvore</i></span>
+                <span class="scan__res" data-i18n="sec.scanRes1">0 segredos</span>
               </div>
               <div class="scan__row">
                 <span class="scan__check">✓</span>
-                <span class="scan__tool">CodeQL <i>· TS + Rust</i></span>
-                <span class="scan__res">0 alertas</span>
+                <span class="scan__tool" data-i18n="sec.scanTool2">CodeQL <i>· TS + Rust</i></span>
+                <span class="scan__res" data-i18n="sec.scanRes2">0 alertas</span>
               </div>
               <div class="scan__row">
                 <span class="scan__check">✓</span>
-                <span class="scan__tool">cargo-audit <i>· RustSec</i></span>
-                <span class="scan__res">0 vulnerabilidades</span>
+                <span class="scan__tool" data-i18n="sec.scanTool3">cargo-audit <i>· RustSec</i></span>
+                <span class="scan__res" data-i18n="sec.scanRes3">0 vulnerabilidades</span>
               </div>
               <div class="scan__row">
                 <span class="scan__check">✓</span>
-                <span class="scan__tool">npm audit <i>· 154 deps</i></span>
-                <span class="scan__res">0 vulnerabilidades</span>
+                <span class="scan__tool" data-i18n="sec.scanTool4">npm audit <i>· 154 deps</i></span>
+                <span class="scan__res" data-i18n="sec.scanRes4">0 vulnerabilidades</span>
               </div>
               <div class="scan__row">
                 <span class="scan__check scan__check--warn">!</span>
-                <span class="scan__tool">Trivy <i>· deps + config</i></span>
-                <span class="scan__res scan__res--warn">1 média · glib</span>
+                <span class="scan__tool" data-i18n="sec.scanTool5">Trivy <i>· deps + config</i></span>
+                <span class="scan__res scan__res--warn" data-i18n="sec.scanRes5">1 média · glib</span>
               </div>
             </div>
-            <figcaption class="scan__note">Resultado real do CI, a cada push. O DoS do hickory-proto foi corrigido (hickory 0.26); a única pendência (glib, <i>unsound</i>) é transitiva da stack GTK do Tauri — não é código do devsplit. <a href="https://github.com/Matheuscara/devsplit/blob/main/docs/security-scan.md" target="_blank" rel="noopener">Relatório completo →</a></figcaption>
+            <figcaption class="scan__note" data-i18n="sec.scanNote">Resultado real do CI, a cada push. O DoS do hickory-proto foi corrigido (hickory 0.26); a única pendência (glib, <i>unsound</i>) é transitiva da stack GTK do Tauri — não é código do devsplit. <a href="https://github.com/Matheuscara/devsplit/blob/main/docs/security-scan.md" target="_blank" rel="noopener">Relatório completo →</a></figcaption>
           </figure>
         </div>
       </div>
@@ -424,8 +432,8 @@
     <section class="section section--install" id="install">
       <div class="wrap wrap--narrow">
         <header class="head head--center" data-reveal>
-          <span class="eyebrow">// instalar</span>
-          <h2 class="head__title">Do clone ao split em quatro comandos.</h2>
+          <span class="eyebrow" data-i18n="ins.eyebrow">// instalar</span>
+          <h2 class="head__title" data-i18n="ins.title">Do clone ao split em quatro comandos.</h2>
         </header>
 
         <figure class="window window--term" data-reveal>
@@ -433,17 +441,17 @@
             <span class="window__dots" aria-hidden="true"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
             <span class="window__title">zsh — devsplit</span>
           </div>
-          <div class="term" id="term" aria-label="Sequência de comandos para instalar e rodar o devsplit">
+          <div class="term" id="term" data-i18n-attrs="aria-label:ins.termAria" aria-label="Sequência de comandos para instalar e rodar o devsplit">
             <pre class="term__out" id="termOut"></pre><span class="term__caret" id="caret" aria-hidden="true"></span>
           </div>
         </figure>
 
         <div class="install__cta" data-reveal>
           <a class="btn btn--primary" href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">
-            Clonar no GitHub
+            <span data-i18n="ins.cta">Clonar no GitHub</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
           </a>
-          <span class="install__note">Linux, macOS e Windows · um único prompt de senha no primeiro start</span>
+          <span class="install__note" data-i18n="ins.note">Linux, macOS e Windows · um único prompt de senha no primeiro start</span>
         </div>
       </div>
     </section>
@@ -453,12 +461,12 @@
   <!-- ╭──────────────────────────────────── MARQUEE ────────────────────────────────────╮ -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee__track">
-      <span class="marquee__set">
+      <span class="marquee__set" data-i18n="marquee.set">
         <em>passthrough</em><i>·</i><em>split por prefixo</em><i>·</i><em>sem Docker</em><i>·</i>
         <em>HTTPS confiável</em><i>·</i><em>devsplit.yaml</em><i>·</i><em>inspector de tráfego</em><i>·</i>
         <em>stage real</em><i>·</i><em>front intacto</em><i>·</i>
       </span>
-      <span class="marquee__set">
+      <span class="marquee__set" data-i18n="marquee.set">
         <em>passthrough</em><i>·</i><em>split por prefixo</em><i>·</i><em>sem Docker</em><i>·</i>
         <em>HTTPS confiável</em><i>·</i><em>devsplit.yaml</em><i>·</i><em>inspector de tráfego</em><i>·</i>
         <em>stage real</em><i>·</i><em>front intacto</em><i>·</i>
@@ -470,42 +478,43 @@
   <footer class="footer">
     <div class="wrap footer__inner">
       <div class="footer__brand">
-        <a class="brand" href="#top" aria-label="devsplit — início">
+        <a class="brand" href="#top" data-i18n-attrs="aria-label:nav.brandAria" aria-label="devsplit — início">
           <img class="brand__mark" src="assets/logo.svg" alt="" width="28" height="28" />
           <span class="brand__name">devsplit</span>
         </a>
-        <p class="footer__tag">O proxy de desenvolvimento que divide o tráfego do stage. Rode local só o que você mexe.</p>
+        <p class="footer__tag" data-i18n="foot.tag">O proxy de desenvolvimento que divide o tráfego do stage. Rode local só o que você mexe.</p>
       </div>
 
-      <nav class="footer__cols" aria-label="Rodapé">
+      <nav class="footer__cols" data-i18n-attrs="aria-label:foot.navAria" aria-label="Rodapé">
         <div class="footer__col">
-          <h4>Produto</h4>
-          <a href="#comparativo">Por quê</a>
-          <a href="#fluxo">Como funciona</a>
-          <a href="#recursos">Recursos</a>
-          <a href="#telas">Telas</a>
-          <a href="#seguranca">Segurança</a>
+          <h4 data-i18n="foot.colProduct">Produto</h4>
+          <a href="#comparativo" data-i18n="nav.why">Por quê</a>
+          <a href="#fluxo" data-i18n="nav.how">Como funciona</a>
+          <a href="#recursos" data-i18n="nav.features">Recursos</a>
+          <a href="#telas" data-i18n="nav.screens">Telas</a>
+          <a href="#seguranca" data-i18n="nav.security">Segurança</a>
         </div>
         <div class="footer__col">
-          <h4>Começar</h4>
-          <a href="#install">Instalar</a>
+          <h4 data-i18n="foot.colStart">Começar</h4>
+          <a href="#install" data-i18n="nav.install">Instalar</a>
           <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">GitHub</a>
           <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">devsplit.yaml</a>
         </div>
         <div class="footer__col">
-          <h4>Recursos</h4>
-          <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">Documentação</a>
-          <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">Releases</a>
-          <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener">Issues</a>
+          <h4 data-i18n="foot.colResources">Recursos</h4>
+          <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener" data-i18n="foot.docs">Documentação</a>
+          <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener" data-i18n="foot.releases">Releases</a>
+          <a href="https://github.com/Matheuscara/devsplit" target="_blank" rel="noopener" data-i18n="foot.issues">Issues</a>
         </div>
       </nav>
     </div>
     <div class="wrap footer__bottom">
       <span>© <span id="year">2026</span> devsplit</span>
-      <span class="footer__meta">feito pra quem cansou de subir a stack inteira</span>
+      <span class="footer__meta" data-i18n="foot.meta">feito pra quem cansou de subir a stack inteira</span>
     </div>
   </footer>
 
+  <script type="module" src="i18n.js"></script>
   <script type="module" src="main.js"></script>
 </body>
 </html>

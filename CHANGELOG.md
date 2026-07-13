@@ -4,6 +4,22 @@ Histórico das mudanças da landing page. Site **estático** (HTML/CSS/JS puro, 
 
 ---
 
+## Multi-idioma (PT-BR / EN)
+
+Landing agora é **bilíngue**, sem build — i18n vanilla via `data-*`.
+
+- **`i18n.js`** — dicionários `pt`/`en` (115 chaves cada), engine que aplica traduções a
+  `[data-i18n]` (innerHTML) e `[data-i18n-attrs="attr:chave;..."]` (atributos: `alt`,
+  `aria-label`), além de `<html lang>`, `<title>` e metas (`description`, `og:*`).
+- **Detecção + persistência** — idioma inicial vem de `localStorage` (`devsplit-lang`),
+  senão de `navigator.language`; fallback `pt`. Escolha salva no `localStorage`.
+- **Seletor `PT | EN`** — na nav e no menu mobile (`.lang-switch`), estado ativo em verde.
+- **Terminal reativo** — `main.js` importa `t()`; linhas traduzíveis (`# prompt`, `✓ rodando`)
+  vêm do dicionário e re-renderizam ao trocar idioma via evento `i18n:change`.
+- Texto PT permanece no HTML como fallback sem-JS.
+
+---
+
 ## Redesign completo (atual)
 
 Reescrita total da landing num visual **dark / neon verde / futurista** (nível Awwwards),
